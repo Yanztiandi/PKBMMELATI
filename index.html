@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hari Guru Nasional - PKBM MELATI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #667eea;
+            padding: 10px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .box {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        h2 {
+            color: #764ba2;
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        .greeting {
+            background: #f093fb;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .section-title {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .teacher-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .teacher {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .teacher-name {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .votes {
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+        .category {
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+            margin: 15px 0 10px 0;
+        }
+
+        .male { color: #4299e1; }
+        .female { color: #f093fb; }
+
+        .footer {
+            text-align: center;
+            color: #667eea;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <h1>🎓 HARI GURU NASIONAL 2025 🎓</h1>
+            <h2>PKBM MELATI</h2>
+            <div class="greeting">
+                <p><b>Selamat Datang! 🌟</b></p>
+                <p>Mari kita rayakan dedikasi para guru dengan voting Guru Terbaik!</p>
+                <p><b>Guru adalah pahlawan tanpa tanda jasa 💖</b></p>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="section-title">🏆 VOTE GURU TERBAIK 🏆</div>
+            
+            <div class="category male">👨‍🏫 GURU LAKI-LAKI</div>
+            <div class="teacher-grid">
+                <div class="teacher">
+                    <div class="teacher-name">PAK YULIUS</div>
+                    <button onclick="vote('yulius','Pak Yulius')">VOTE</button>
+                    <div class="votes" id="v-yulius">0 Vote</div>
+                </div>
+                <div class="teacher">
+                    <div class="teacher-name">PAK BOBI</div>
+                    <button onclick="vote('bobi','Pak Bobi')">VOTE</button>
+                    <div class="votes" id="v-bobi">0 Vote</div>
+                </div>
+                <div class="teacher">
+                    <div class="teacher-name">PAK RIZKY</div>
+                    <button onclick="vote('rizky','Pak Rizky')">VOTE</button>
+                    <div class="votes" id="v-rizky">0 Vote</div>
+                </div>
+                <div class="teacher">
+                    <div class="teacher-name">PAK SUPRA</div>
+                    <button onclick="vote('supra','Pak Supra')">VOTE</button>
+                    <div class="votes" id="v-supra">0 Vote</div>
+                </div>
+            </div>
+
+            <div class="category female">👩‍🏫 GURU PEREMPUAN</div>
+            <div class="teacher-grid">
+                <div class="teacher">
+                    <div class="teacher-name">IBU SUZANA</div>
+                    <button onclick="vote('suzana','Ibu Suzana')">VOTE</button>
+                    <div class="votes" id="v-suzana">0 Vote</div>
+                </div>
+                <div class="teacher">
+                    <div class="teacher-name">IBU NANI</div>
+                    <button onclick="vote('nani','Ibu Nani')">VOTE</button>
+                    <div class="votes" id="v-nani">0 Vote</div>
+                </div>
+                <div class="teacher">
+                    <div class="teacher-name">IBU YAKAZI</div>
+                    <button onclick="vote('yakazi','Ibu Yakazi')">VOTE</button>
+                    <div class="votes" id="v-yakazi">0 Vote</div>
+                </div>
+                <div class="teacher">
+                    <div class="teacher-name">IBU RTUKI</div>
+                    <button onclick="vote('rtuki','Ibu Rtuki')">VOTE</button>
+                    <div class="votes" id="v-rtuki">0 Vote</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="box footer">
+            <p><b>💻 Website by: Ilham</b></p>
+            <p>🏫 PKBM MELATI</p>
+            <p>❤️ Terima kasih untuk semua guru</p>
+        </div>
+    </div>
+
+    <script>
+        var v = {
+            yulius:0, bobi:0, rizky:0, supra:0,
+            suzana:0, nani:0, yakazi:0, rtuki:0
+        };
+
+        function vote(k, n) {
+            v[k]++;
+            document.getElementById('v-'+k).textContent = v[k] + ' Vote' + (v[k]>1?'s':'');
+            alert('✨ Vote untuk ' + n + ' tercatat!');
+        }
+    </script>
+</body>
+</html>
