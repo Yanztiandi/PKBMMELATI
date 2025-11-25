@@ -2,89 +2,67 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Voting Guru Favorit - PKBM MELATI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hari Guru Nasional 2025 - PKBM MELATI</title>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    padding: 20px;
-    margin: 0;
-    color: #fff;
-  }
-  .container {
-    max-width: 600px;
-    margin: auto;
-    background: white;
-    color: #333;
-    padding: 20px;
-    border-radius: 12px;
-  }
-  .logo-wrap { text-align: center; margin-bottom: 10px; }
-  .logo {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #667eea;
-  }
-  h1 { text-align: center; color:#667eea; font-size:22px; }
-  h2 { text-align:center; margin-top:-5px; color:#764ba2; }
-
-  .candidate {
-    background: #667eea;
-    color: white;
-    padding: 14px;
-    margin: 10px 0;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  button {
-    padding: 8px 16px;
-    border: none;
-    background: white;
-    color: #667eea;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  button:disabled {
-    background: #ccc;
-    color: #555;
-    cursor: not-allowed;
-  }
-  #doneMessage {
-    text-align: center;
-    margin-top: 15px;
-    font-size: 18px;
-    color: green;
-    display: none;
-  }
+body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);margin:0;padding:15px;}
+.container{max-width:1000px;margin:0 auto;}
+.header{background:white;border-radius:15px;padding:25px;text-align:center;margin-bottom:20px;box-shadow:0 5px 15px rgba(0,0,0,0.2);}
+.header h1{color:#667eea;font-size:1.8em;margin-bottom:10px;}
+.header h2{color:#764ba2;font-size:1.4em;margin-bottom:15px;}
+.greeting{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);color:white;padding:20px;border-radius:10px;font-size:1em;line-height:1.5;}
+.section-title{background:white;color:#667eea;padding:15px;border-radius:10px;text-align:center;font-size:1.5em;margin:20px 0 15px;font-weight:bold;box-shadow:0 3px 10px rgba(0,0,0,0.1);}
+.voting-section{background:white;border-radius:15px;padding:20px;margin-bottom:20px;box-shadow:0 5px 15px rgba(0,0,0,0.2);}
+.category-title{text-align:center;margin-bottom:15px;font-size:1.5em;font-weight:bold;}
+.male-section{border-top:4px solid #4299e1;}
+.female-section{border-top:4px solid #f093fb;}
+.male-section .category-title{color:#4299e1;}
+.female-section .category-title{color:#f093fb;}
+.teachers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:15px;}
+.teacher-card{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:transform 0.3s;}
+.teacher-card:hover{transform:scale(1.05);box-shadow:0 8px 20px rgba(0,0,0,0.3);}
+.teacher-name{color:white;font-size:1.2em;font-weight:bold;margin-bottom:10px;}
+.vote-btn{background:white;color:#667eea;border:none;padding:10px 25px;border-radius:20px;font-size:1em;font-weight:bold;cursor:pointer;width:100%;}
+.vote-count{color:white;margin-top:8px;font-size:0.9em;}
+.footer{background:white;border-radius:12px;padding:20px;text-align:center;margin-top:20px;}
 </style>
 </head>
 <body>
 
 <div class="container">
+<div class="header">
+<h1>🎓 SELAMAT HARI GURU NASIONAL 2025 🎓</h1>
+<h2>PKBM MELATI</h2>
+<div class="greeting">
+<p><strong>Voting Guru Terbaik PKBM Melati 🌟</strong></p>
+<p>Pilih guru favoritmu dan berikan apresiasi terbaik ❤️</p>
+</div>
+</div>
 
-  <div class="logo-wrap">
-    <img src="https://files.catbox.moe/l0f8t2.jpg" class="logo">
-  </div>
+<div class="section-title">🏆 VOTE GURU TERBAIK 2025 🏆</div>
 
-  <h1>🎓 VOTING GURU TERFAVORIT 🎓</h1>
-  <h2>PKBM MELATI</h2>
+<div class="voting-section male-section">
+<div class="category-title">👨‍🏫 GURU LAKI-LAKI</div>
+<div class="teachers-grid" id="male"></div>
+</div>
 
-  <div id="list"></div>
-  <div id="doneMessage">Terima kasih, suara Anda telah terekam ✅</div>
+<div class="voting-section female-section">
+<div class="category-title">👩‍🏫 GURU PEREMPUAN</div>
+<div class="teachers-grid" id="female"></div>
+</div>
 
+<div class="footer">
+<p><strong>Website Created by: Ilham</strong></p>
+<p>PKBM MELATI - Hari Guru Nasional 2025</p>
+</div>
 </div>
 
 <script>
-/* === FIREBASE CONFIG === */
+// ==== FIREBASE CONFIG ASLI KAMU ====
 const firebaseConfig = {
   apiKey: "AIzaSyBW8G3BOTmZxCc7IkjgK40XNvSqNxJqma0",
   authDomain: "pkbm-melatii.firebaseapp.com",
@@ -98,69 +76,56 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-/* === DATA KANDIDAT === */
-const candidates = [
-  "Bobi Hartanto, S.Pd",
-  "Suprayetno, S.Pd",
-  "Dra. Suzana",
-  "Dra. Maznah",
-  "Dra. Fajarida, Ld",
-  "Innani Sumartini, S.Pd"
-];
-
-const listDiv = document.getElementById("list");
 let voted = localStorage.getItem("alreadyVoted");
 
-/* === RENDER LIST === */
-function render(votes) {
-  listDiv.innerHTML = "";
-  candidates.forEach((name, i) => {
-    const count = votes[name] || 0;
-    const box = document.createElement("div");
-    box.className = "candidate";
-    box.innerHTML = `
-      <span>${i+1}. ${name}</span>
-      <span><b>${count}</b> suara</span>
-      <button ${voted ? "disabled" : ""} onclick="vote('${name}')">Vote</button>
-    `;
-    listDiv.appendChild(box);
-  });
+// DATA GURU
+const maleTeachers = [
+  "Pak Yulius","Pak Bobi","Pak Rizky","Pak Supra"
+];
+const femaleTeachers = [
+  "Ibu Suzana","Ibu Nani","Ibu Yakazi","Ibu Rtuki"
+];
 
-  if (voted) document.getElementById("doneMessage").style.display = "block";
+function renderTeachers(list, container){
+  container.innerHTML="";
+  list.forEach(name=>{
+    const div=document.createElement("div");
+    div.className="teacher-card";
+    div.innerHTML=`
+      <div class="teacher-name">${name}</div>
+      <button class="vote-btn" ${voted?'disabled':''} onclick="vote('${name}')">VOTE</button>
+      <div class="vote-count" id="count-${name}">0 suara</div>
+    `;
+    container.appendChild(div);
+  });
 }
 
-/* === REALTIME DATABASE === */
-db.ref("votes").on("value", snap => {
-  render(snap.val() || {});
+renderTeachers(maleTeachers,document.getElementById("male"));
+renderTeachers(femaleTeachers,document.getElementById("female"));
+
+// REALTIME UPDATE
+db.ref("votes").on("value",snap=>{
+  const data=snap.val()||{};
+  for(const key in data){
+    const el=document.getElementById("count-"+key);
+    if(el) el.innerText=data[key]+" suara";
+  }
 });
 
-/* === TELEGRAM === */
-const botToken = "8075129453:AAHb75QqznKgmLTtDgThmP6pJveTphSRmKo";
-const chatId = "8116752882";
+// PROSES VOTE
+function vote(name){
+  if(voted) return alert("Kamu sudah voting ✅");
 
-function sendToTelegram(name) {
-  const message = `📩 Suara Masuk!\n✅ Pilihan: ${name}\n🏫 PKBM MELATI\n🕒 ${new Date().toLocaleTimeString()}`;
-  fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ chat_id: chatId, text: message })
-  });
-}
-
-/* === PROSES VOTE === */
-function vote(name) {
-  if (voted) return;
-
-  const refVote = db.ref("votes/" + name);
-  refVote.once("value").then(snapshot => {
-    const current = snapshot.val() || 0;
-    refVote.set(current + 1);
+  const ref=db.ref("votes/"+name);
+  ref.once("value").then(snap=>{
+    const current=snap.val()||0;
+    ref.set(current+1);
   });
 
-  sendToTelegram(name);
-  localStorage.setItem("alreadyVoted", "1");
-  voted = true;
-  document.getElementById("doneMessage").style.display = "block";
+  localStorage.setItem("alreadyVoted","1");
+  voted=true;
+  alert("✅ Terima kasih! Vote kamu untuk "+name+" telah tercatat");
+  document.querySelectorAll(".vote-btn").forEach(b=>b.disabled=true);
 }
 </script>
 
