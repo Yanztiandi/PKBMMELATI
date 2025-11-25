@@ -3,192 +3,704 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hari Guru Nasional - PKBM MELATI</title>
+    <title>Hari Guru Nasional 2025 - PKBM MELATI</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #667eea;
-            padding: 10px;
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        .box {
+        .header {
             background: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeInDown 0.8s ease;
         }
 
-        h1 {
+        .header h1 {
             color: #667eea;
-            text-align: center;
-            font-size: 1.5em;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
-        h2 {
+        .header h2 {
             color: #764ba2;
-            text-align: center;
-            font-size: 1.2em;
+            font-size: 1.8em;
+            margin-bottom: 20px;
         }
 
         .greeting {
-            background: #f093fb;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 10px;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
         }
 
         .section-title {
-            background: #667eea;
-            color: white;
-            padding: 12px;
-            border-radius: 8px;
+            background: white;
+            color: #667eea;
+            padding: 20px;
+            border-radius: 15px;
             text-align: center;
-            font-size: 1.3em;
-            margin-bottom: 15px;
+            font-size: 1.8em;
+            margin: 30px 0 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            animation: pulse 2s infinite;
         }
 
-        .teacher-grid {
+        .voting-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 1s ease;
+        }
+
+        .teachers-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
         }
 
-        .teacher {
-            background: #667eea;
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
+        .teacher-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 25px;
             text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .teacher-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .teacher-card.voted {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border: 3px solid #ffd700;
+        }
+
+        .teacher-card.voted::after {
+            content: '✓ ANDA SUDAH VOTE';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ffd700;
+            color: #764ba2;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .teacher-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
         }
 
         .teacher-name {
-            font-size: 1.1em;
+            color: white;
+            font-size: 1.4em;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
-        button {
+        .vote-btn {
             background: white;
             color: #667eea;
             border: none;
-            padding: 8px 20px;
-            border-radius: 15px;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
             font-weight: bold;
             cursor: pointer;
-            width: 100%;
+            transition: all 0.3s ease;
         }
 
-        .votes {
-            margin-top: 8px;
-            font-weight: bold;
+        .vote-btn:hover {
+            background: #f093fb;
+            color: white;
+            transform: scale(1.1);
         }
 
-        .category {
+        .vote-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .vote-count {
+            color: white;
             font-size: 1.2em;
+            margin-top: 10px;
             font-weight: bold;
-            text-align: center;
-            margin: 15px 0 10px 0;
         }
 
-        .male { color: #4299e1; }
-        .female { color: #f093fb; }
+        .results-container {
+            display: none;
+        }
+
+        .results-container.active {
+            display: block;
+        }
+
+        .leaderboard {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .leaderboard-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .leaderboard-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .leaderboard-item.first {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #764ba2;
+            font-size: 1.2em;
+            padding: 25px;
+        }
+
+        .leaderboard-item.first::before {
+            content: '👑';
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            font-size: 3em;
+            opacity: 0.3;
+        }
+
+        .leaderboard-rank {
+            font-size: 2em;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .leaderboard-info {
+            flex: 1;
+        }
+
+        .leaderboard-name {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .leaderboard-votes {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            background: rgba(255,255,255,0.3);
+            height: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: white;
+            height: 100%;
+            border-radius: 5px;
+            transition: width 1s ease;
+        }
 
         .footer {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
             text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .footer p {
             color: #667eea;
-            margin-top: 10px;
+            font-size: 1.1em;
+            margin: 5px 0;
+        }
+
+        .male-section {
+            border-top: 5px solid #4299e1;
+        }
+
+        .female-section {
+            border-top: 5px solid #f093fb;
+        }
+
+        .reset-btn {
+            background: #f5576c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .reset-btn:hover {
+            background: #d63447;
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes shine {
+            0% {
+                left: -50%;
+            }
+            100% {
+                left: 150%;
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f093fb;
+            position: absolute;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .header h2 {
+                font-size: 1.3em;
+            }
+            
+            .greeting {
+                font-size: 1em;
+                padding: 20px;
+            }
+            
+            .teachers-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="box">
-            <h1>🎓 HARI GURU NASIONAL 2025 🎓</h1>
+        <div class="header">
+            <h1>🎓 SELAMAT HARI GURU NASIONAL 2025 🎓</h1>
             <h2>PKBM MELATI</h2>
             <div class="greeting">
-                <p><b>Selamat Datang! 🌟</b></p>
-                <p>Mari kita rayakan dedikasi para guru dengan voting Guru Terbaik!</p>
-                <p><b>Guru adalah pahlawan tanpa tanda jasa 💖</b></p>
+                <p>Selamat datang di Website Hari Guru Nasional PKBM Melati! 🌟</p>
+                <p>Terima kasih telah mengunjungi website ini. Mari kita rayakan dedikasi dan kerja keras para guru kita dengan memberikan apresiasi melalui voting Guru Terbaik!</p>
+                <p><strong>Guru adalah pahlawan tanpa tanda jasa. Mari kita hargai mereka! 💖</strong></p>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn active" onclick="showPage('voting')">📝 VOTING</button>
+                <button class="nav-btn" onclick="showPage('results')">📊 HASIL VOTING</button>
             </div>
         </div>
 
-        <div class="box">
-            <div class="section-title">🏆 VOTE GURU TERBAIK 🏆</div>
-            
-            <div class="category male">👨‍🏫 GURU LAKI-LAKI</div>
-            <div class="teacher-grid">
-                <div class="teacher">
-                    <div class="teacher-name">PAK YULIUS</div>
-                    <button onclick="vote('yulius','Pak Yulius')">VOTE</button>
-                    <div class="votes" id="v-yulius">0 Vote</div>
-                </div>
-                <div class="teacher">
-                    <div class="teacher-name">PAK BOBI</div>
-                    <button onclick="vote('bobi','Pak Bobi')">VOTE</button>
-                    <div class="votes" id="v-bobi">0 Vote</div>
-                </div>
-                <div class="teacher">
-                    <div class="teacher-name">PAK RIZKY</div>
-                    <button onclick="vote('rizky','Pak Rizky')">VOTE</button>
-                    <div class="votes" id="v-rizky">0 Vote</div>
-                </div>
-                <div class="teacher">
-                    <div class="teacher-name">PAK SUPRA</div>
-                    <button onclick="vote('supra','Pak Supra')">VOTE</button>
-                    <div class="votes" id="v-supra">0 Vote</div>
+        <div id="voting-page">
+            <div class="section-title">
+                🏆 VOTE GURU TERBAIK 2025 🏆
+            </div>
+
+            <div class="voting-section male-section">
+                <h2 style="color: #4299e1; text-align: center; margin-bottom: 20px; font-size: 2em;">
+                    👨‍🏫 KATEGORI GURU LAKI-LAKI
+                </h2>
+                <div class="teachers-grid" id="male-teachers">
                 </div>
             </div>
 
-            <div class="category female">👩‍🏫 GURU PEREMPUAN</div>
-            <div class="teacher-grid">
-                <div class="teacher">
-                    <div class="teacher-name">IBU SUZANA</div>
-                    <button onclick="vote('suzana','Ibu Suzana')">VOTE</button>
-                    <div class="votes" id="v-suzana">0 Vote</div>
-                </div>
-                <div class="teacher">
-                    <div class="teacher-name">IBU NANI</div>
-                    <button onclick="vote('nani','Ibu Nani')">VOTE</button>
-                    <div class="votes" id="v-nani">0 Vote</div>
-                </div>
-                <div class="teacher">
-                    <div class="teacher-name">IBU YAKAZI</div>
-                    <button onclick="vote('yakazi','Ibu Yakazi')">VOTE</button>
-                    <div class="votes" id="v-yakazi">0 Vote</div>
-                </div>
-                <div class="teacher">
-                    <div class="teacher-name">IBU RTUKI</div>
-                    <button onclick="vote('rtuki','Ibu Rtuki')">VOTE</button>
-                    <div class="votes" id="v-rtuki">0 Vote</div>
+            <div class="voting-section female-section">
+                <h2 style="color: #f093fb; text-align: center; margin-bottom: 20px; font-size: 2em;">
+                    👩‍🏫 KATEGORI GURU PEREMPUAN
+                </h2>
+                <div class="teachers-grid" id="female-teachers">
                 </div>
             </div>
         </div>
 
-        <div class="box footer">
-            <p><b>💻 Website by: Ilham</b></p>
-            <p>🏫 PKBM MELATI</p>
-            <p>❤️ Terima kasih untuk semua guru</p>
+        <div id="results-page" class="results-container">
+            <div class="section-title">
+                🏆 HASIL VOTING GURU TERBAIK 2025 🏆
+            </div>
+
+            <div class="leaderboard male-section">
+                <h2 style="color: #4299e1; text-align: center; margin-bottom: 30px; font-size: 2em;">
+                    👨‍🏫 LEADERBOARD GURU LAKI-LAKI
+                </h2>
+                <div id="male-leaderboard"></div>
+            </div>
+
+            <div class="leaderboard female-section">
+                <h2 style="color: #f093fb; text-align: center; margin-bottom: 30px; font-size: 2em;">
+                    👩‍🏫 LEADERBOARD GURU PEREMPUAN
+                </h2>
+                <div id="female-leaderboard"></div>
+            </div>
+
+            <div style="text-align: center;">
+                <button class="reset-btn" onclick="resetVotes()">🔄 Reset Semua Vote (Admin)</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>💻 Website Created by: Ilham</strong></p>
+            <p>🏫 PKBM MELATI - Hari Guru Nasional 2025</p>
+            <p>❤️ Terima kasih untuk semua guru yang telah mendedikasikan hidupnya untuk pendidikan</p>
         </div>
     </div>
 
     <script>
-        var v = {
-            yulius:0, bobi:0, rizky:0, supra:0,
-            suzana:0, nani:0, yakazi:0, rtuki:0
+        const teachers = {
+            male: [
+                { id: 'yulius', name: 'PAK YULIUS', emoji: '👨‍🏫' },
+                { id: 'bobi', name: 'PAK BOBI', emoji: '👨‍🏫' },
+                { id: 'rizky', name: 'PAK RIZKY', emoji: '👨‍🏫' },
+                { id: 'supra', name: 'PAK SUPRA', emoji: '👨‍🏫' }
+            ],
+            female: [
+                { id: 'suzana', name: 'IBU SUZANA', emoji: '👩‍🏫' },
+                { id: 'nani', name: 'IBU NANI', emoji: '👩‍🏫' },
+                { id: 'yakazi', name: 'IBU YAKAZI', emoji: '👩‍🏫' },
+                { id: 'rtuki', name: 'IBU RTUKI', emoji: '👩‍🏫' }
+            ]
         };
 
-        function vote(k, n) {
-            v[k]++;
-            document.getElementById('v-'+k).textContent = v[k] + ' Vote' + (v[k]>1?'s':'');
-            alert('✨ Vote untuk ' + n + ' tercatat!');
+        async function loadVotes() {
+            const votes = {};
+            for (const gender in teachers) {
+                for (const teacher of teachers[gender]) {
+                    try {
+                        const result = await window.storage.get(`vote_${teacher.id}`);
+                        votes[teacher.id] = result ? parseInt(result.value) : 0;
+                    } catch {
+                        votes[teacher.id] = 0;
+                    }
+                }
+            }
+            return votes;
         }
+
+        async function saveVote(teacherId, count) {
+            try {
+                await window.storage.set(`vote_${teacherId}`, count.toString());
+            } catch (error) {
+                console.error('Error saving vote:', error);
+            }
+        }
+
+        async function hasVoted(gender) {
+            try {
+                const result = await window.storage.get(`voted_${gender}`);
+                return result !== null;
+            } catch {
+                return false;
+            }
+        }
+
+        async function markAsVoted(gender, teacherId) {
+            try {
+                await window.storage.set(`voted_${gender}`, teacherId);
+            } catch (error) {
+                console.error('Error marking vote:', error);
+            }
+        }
+
+        async function getVotedTeacher(gender) {
+            try {
+                const result = await window.storage.get(`voted_${gender}`);
+                return result ? result.value : null;
+            } catch {
+                return null;
+            }
+        }
+
+        async function vote(teacherId, teacherName, gender) {
+            const voted = await hasVoted(gender);
+            if (voted) {
+                alert('⚠️ Anda sudah memberikan vote di kategori ini!');
+                return;
+            }
+
+            const votes = await loadVotes();
+            votes[teacherId]++;
+            await saveVote(teacherId, votes[teacherId]);
+            await markAsVoted(gender, teacherId);
+
+            createConfetti(event.clientX, event.clientY);
+
+            const genderText = gender === 'male' ? 'Guru Laki-laki' : 'Guru Perempuan';
+            alert(`✨ Terima kasih! Vote Anda untuk ${teacherName} (${genderText}) telah tercatat! ✨`);
+
+            renderVotingPage();
+        }
+
+        async function renderVotingPage() {
+            const votes = await loadVotes();
+            const votedMale = await getVotedTeacher('male');
+            const votedFemale = await getVotedTeacher('female');
+
+            const maleContainer = document.getElementById('male-teachers');
+            const femaleContainer = document.getElementById('female-teachers');
+
+            maleContainer.innerHTML = '';
+            femaleContainer.innerHTML = '';
+
+            for (const teacher of teachers.male) {
+                const isVoted = votedMale === teacher.id;
+                const card = createTeacherCard(teacher, votes[teacher.id] || 0, 'male', isVoted);
+                maleContainer.appendChild(card);
+            }
+
+            for (const teacher of teachers.female) {
+                const isVoted = votedFemale === teacher.id;
+                const card = createTeacherCard(teacher, votes[teacher.id] || 0, 'female', isVoted);
+                femaleContainer.appendChild(card);
+            }
+        }
+
+        function createTeacherCard(teacher, voteCount, gender, isVoted) {
+            const card = document.createElement('div');
+            card.className = `teacher-card${isVoted ? ' voted' : ''}`;
+            card.innerHTML = `
+                <div class="teacher-name">${teacher.emoji} ${teacher.name}</div>
+                <button class="vote-btn" ${isVoted ? 'disabled' : ''}>
+                    ${isVoted ? '✓ SUDAH VOTE' : 'VOTE'}
+                </button>
+                <div class="vote-count">${voteCount} Vote${voteCount !== 1 ? 's' : ''}</div>
+            `;
+
+            if (!isVoted) {
+                card.onclick = () => vote(teacher.id, teacher.name, gender);
+            }
+
+            return card;
+        }
+
+        async function renderResults() {
+            const votes = await loadVotes();
+
+            const maleVotes = teachers.male.map(t => ({ ...t, votes: votes[t.id] || 0 }))
+                .sort((a, b) => b.votes - a.votes);
+            
+            const femaleVotes = teachers.female.map(t => ({ ...t, votes: votes[t.id] || 0 }))
+                .sort((a, b) => b.votes - a.votes);
+
+            renderLeaderboard('male-leaderboard', maleVotes);
+            renderLeaderboard('female-leaderboard', femaleVotes);
+        }
+
+        function renderLeaderboard(containerId, sortedTeachers) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            const maxVotes = Math.max(...sortedTeachers.map(t => t.votes), 1);
+
+            sortedTeachers.forEach((teacher, index) => {
+                const item = document.createElement('div');
+                item.className = `leaderboard-item${index === 0 ? ' first' : ''}`;
+                
+                const percentage = (teacher.votes / maxVotes) * 100;
+                
+                item.innerHTML = `
+                    <div class="leaderboard-rank">#${index + 1}</div>
+                    <div class="leaderboard-info">
+                        <div class="leaderboard-name">${teacher.emoji} ${teacher.name}</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${percentage}%"></div>
+                        </div>
+                    </div>
+                    <div class="leaderboard-votes">${teacher.votes} 🗳️</div>
+                `;
+                
+                container.appendChild(item);
+            });
+        }
+
+        function showPage(page) {
+            const votingPage = document.getElementById('voting-page');
+            const resultsPage = document.getElementById('results-page');
+            const buttons = document.querySelectorAll('.nav-btn');
+
+            if (page === 'voting') {
+                votingPage.style.display = 'block';
+                resultsPage.style.display = 'none';
+                buttons[0].classList.add('active');
+                buttons[1].classList.remove('active');
+                renderVotingPage();
+            } else {
+                votingPage.style.display = 'none';
+                resultsPage.style.display = 'block';
+                buttons[0].classList.remove('active');
+                buttons[1].classList.add('active');
+                renderResults();
+            }
+        }
+
+        async function resetVotes() {
+            if (!confirm('⚠️ Apakah Anda yakin ingin mereset semua vote? Tindakan ini tidak dapat dibatalkan!')) {
+                return;
+            }
+
+            if (!confirm('🔐 Konfirmasi sekali lagi: Reset SEMUA vote?')) {
+                return;
+            }
+
+            try {
+                for (const gender in teachers) {
+                    for (const teacher of teachers[gender]) {
+                        await window.storage.delete(`vote_${teacher.id}`);
+                    }
+                }
+                await window.storage.delete('voted_male');
+                await window.storage.delete('voted_female');
+
+                alert('✅ Semua vote berhasil direset!');
+                showPage('voting');
+            } catch (error) {
+                alert('❌ Gagal mereset vote: ' + error.message);
+            }
+        }
+
+        function createConfetti(x, y) {
+            const colors = ['#f093fb', '#f5576c', '#667eea', '#764ba2', '#ffd700', '#ff69b4'];
+            for (let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = x + 'px';
+                confetti.style.top = y + 'px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 0.3 + 's';
+                confetti.style.transform = `translateX(${(Math.random() - 0.5) * 200}px)`;
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3000);
+            }
+        }
+
+        renderVotingPage();
     </script>
 </body>
 </html>
