@@ -1,878 +1,123 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hari Guru Nasional 2025 - PKBM MELATI</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .header {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            animation: fadeInDown 0.8s ease;
-        }
-
-        .header h1 {
-            color: #667eea;
-            font-size: 2.5em;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .header h2 {
-            color: #764ba2;
-            font-size: 1.8em;
-            margin-bottom: 20px;
-        }
-
-        .greeting {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 10px;
-            font-size: 1.2em;
-            line-height: 1.6;
-        }
-
-        .nav-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        .nav-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .nav-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-
-        .nav-btn.active {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-
-        .section-title {
-            background: white;
-            color: #667eea;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            font-size: 1.8em;
-            margin: 30px 0 20px 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            animation: pulse 2s infinite;
-        }
-
-        .voting-section {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            animation: fadeIn 1s ease;
-        }
-
-        .teachers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .teacher-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .teacher-card:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        .teacher-card.voted {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            border: 3px solid #ffd700;
-        }
-
-        .teacher-card.voted::after {
-            content: '✓ SUDAH VOTE';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #ffd700;
-            color: #764ba2;
-            padding: 5px 10px;
-            border-radius: 10px;
-            font-size: 0.8em;
-            font-weight: bold;
-        }
-
-        .teacher-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
-            transform: rotate(45deg);
-            animation: shine 3s infinite;
-        }
-
-        .teacher-name {
-            color: white;
-            font-size: 1.4em;
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .vote-btn {
-            background: white;
-            color: #667eea;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .vote-btn:hover:not(:disabled) {
-            background: #ffd700;
-            color: #764ba2;
-            transform: scale(1.1);
-        }
-
-        .vote-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .vote-count {
-            color: white;
-            font-size: 1.2em;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal.active {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 600px;
-            width: 90%;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
-            animation: slideIn 0.3s ease;
-        }
-
-        .modal-header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .modal-header h2 {
-            color: #667eea;
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-
-        .modal-header p {
-            color: #764ba2;
-            font-size: 1.2em;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            color: #667eea;
-            font-weight: bold;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-        }
-
-        .form-group textarea {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #667eea;
-            border-radius: 15px;
-            font-size: 1em;
-            font-family: inherit;
-            resize: vertical;
-            min-height: 120px;
-            transition: all 0.3s ease;
-        }
-
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #f093fb;
-            box-shadow: 0 0 15px rgba(240, 147, 251, 0.3);
-        }
-
-        .form-group input[type="text"] {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #667eea;
-            border-radius: 15px;
-            font-size: 1em;
-            font-family: inherit;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input[type="text"]:focus {
-            outline: none;
-            border-color: #f093fb;
-            box-shadow: 0 0 15px rgba(240, 147, 251, 0.3);
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 25px;
-        }
-
-        .modal-btn {
-            padding: 15px 40px;
-            border: none;
-            border-radius: 25px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .modal-btn.submit {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .modal-btn.submit:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-
-        .modal-btn.cancel {
-            background: #ccc;
-            color: #666;
-        }
-
-        .modal-btn.cancel:hover {
-            background: #999;
-        }
-
-        /* Password Modal */
-        .password-modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-        }
-
-        .password-modal.active {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .password-content {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 400px;
-            width: 90%;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
-            text-align: center;
-        }
-
-        .password-content h2 {
-            color: #667eea;
-            margin-bottom: 20px;
-        }
-
-        .password-content input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #667eea;
-            border-radius: 15px;
-            font-size: 1.1em;
-            margin-bottom: 20px;
-        }
-
-        #results-page {
-            display: none;
-        }
-
-        #results-page.active {
-            display: block;
-        }
-
-        .leaderboard {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .leaderboard-item {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .leaderboard-item:hover {
-            transform: translateX(10px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-
-        .leaderboard-item.first {
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            color: #764ba2;
-            font-size: 1.2em;
-            padding: 25px;
-            animation: winner 2s infinite;
-        }
-
-        .leaderboard-item.first::before {
-            content: '👑';
-            position: absolute;
-            top: -10px;
-            right: 20px;
-            font-size: 3em;
-            opacity: 0.3;
-        }
-
-        .leaderboard-rank {
-            font-size: 2em;
-            font-weight: bold;
-            margin-right: 20px;
-        }
-
-        .leaderboard-info {
-            flex: 1;
-        }
-
-        .leaderboard-name {
-            font-size: 1.3em;
-            font-weight: bold;
-        }
-
-        .leaderboard-votes {
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-
-        .progress-bar {
-            background: rgba(255,255,255,0.3);
-            height: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            background: white;
-            height: 100%;
-            border-radius: 5px;
-            transition: width 1s ease;
-        }
-
-        .footer {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            margin-top: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .footer p {
-            color: #667eea;
-            font-size: 1.1em;
-            margin: 5px 0;
-        }
-
-        .male-section {
-            border-top: 5px solid #4299e1;
-        }
-
-        .female-section {
-            border-top: 5px solid #f093fb;
-        }
-
-        .reset-btn {
-            background: #f5576c;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 1em;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .reset-btn:hover {
-            background: #d63447;
-            transform: scale(1.05);
-        }
-
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes shine {
-            0% { left: -50%; }
-            100% { left: 150%; }
-        }
-
-        @keyframes winner {
-            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
-            50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.8); }
-        }
-
-        .confetti {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: #f093fb;
-            animation: confetti-fall 3s linear;
-            pointer-events: none;
-        }
-
-        @keyframes confetti-fall {
-            to {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header h1 { font-size: 1.8em; }
-            .header h2 { font-size: 1.3em; }
-            .greeting { font-size: 1em; padding: 20px; }
-            .teachers-grid { grid-template-columns: 1fr; }
-            .modal-content { padding: 25px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Voting Guru Favorit</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
+  h1 { text-align: center; }
+  .candidate { background: white; padding: 12px; margin: 10px 0; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+  button { padding: 8px 14px; border: none; background: #007bff; color: white; border-radius: 6px; cursor: pointer; }
+  button:disabled { background: gray; cursor: not-allowed; }
+  .count { font-weight: bold; }
+  #doneMessage { text-align: center; margin-top: 20px; font-size: 18px; color: green; display: none; }
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🎓 SELAMAT HARI GURU NASIONAL 2025 🎓</h1>
-            <h2>PKBM MELATI</h2>
-            <div class="greeting">
-                <p>Selamat datang di Website Hari Guru Nasional PKBM Melati! 🌟</p>
-                <p>Terima kasih telah mengunjungi website ini. Mari kita rayakan dedikasi dan kerja keras para guru kita dengan memberikan apresiasi melalui voting Guru Terbaik!</p>
-                <p><strong>Guru adalah pahlawan tanpa tanda jasa. Mari kita hargai mereka! 💖</strong></p>
-            </div>
-            <div class="nav-buttons">
-                <button class="nav-btn active" onclick="showPage('voting')">📝 VOTING</button>
-                <button class="nav-btn" onclick="showPage('results')">📊 HASIL VOTING</button>
-            </div>
-        </div>
 
-        <div id="voting-page">
-            <div class="section-title">🏆 VOTE GURU TERBAIK 2025 🏆</div>
+<h1>Voting Guru Favorit</h1>
+<div id="list"></div>
+<div id="doneMessage">Terima kasih, suara Anda telah terekam ✅</div>
 
-            <div class="voting-section male-section">
-                <h2 style="color: #4299e1; text-align: center; margin-bottom: 20px; font-size: 2em;">
-                    👨‍🏫 KATEGORI GURU LAKI-LAKI
-                </h2>
-                <div class="teachers-grid" id="male-teachers"></div>
-            </div>
+<script type="module">
+/* ==========================
+   FIREBASE SETUP
+========================== */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-            <div class="voting-section female-section">
-                <h2 style="color: #f093fb; text-align: center; margin-bottom: 20px; font-size: 2em;">
-                    👩‍🏫 KATEGORI GURU PEREMPUAN
-                </h2>
-                <div class="teachers-grid" id="female-teachers"></div>
-            </div>
-        </div>
+// firebaseConfig kamu (SUDAH ADA)
+const firebaseConfig = {
+  apiKey: "AIzaSyBW8G3BOTmZxCc7IkjgK40XNvSqNxJqma0",
+  authDomain: "pkbm-melatii.firebaseapp.com",
+  projectId: "pkbm-melatii",
+  storageBucket: "pkbm-melatii.firebasestorage.app",
+  messagingSenderId: "877041628308",
+  appId: "1:877041628308:web:c80972df07c0504e007081",
+  measurementId: "G-LFH125W36H",
+  databaseURL: "https://pkbm-melatii-default-rtdb.firebaseio.com"
+};
 
-        <div id="results-page">
-            <div class="section-title">🏆 HASIL VOTING GURU TERBAIK 2025 🏆</div>
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-            <div class="leaderboard male-section">
-                <h2 style="color: #4299e1; text-align: center; margin-bottom: 30px; font-size: 2em;">
-                    👨‍🏫 LEADERBOARD GURU LAKI-LAKI
-                </h2>
-                <div id="male-leaderboard"></div>
-            </div>
+/* ==========================
+   DATA KANDIDAT
+========================== */
+const candidates = [
+  "Bobi Hartanto, S.Pd",
+  "Suprayetno, S.Pd",
+  "Dra. Suzana",
+  "Dra. Maznah",
+  "Dra. Fajarida, Ld",
+  "Innani Sumartini, S.Pd"
+];
 
-            <div class="leaderboard female-section">
-                <h2 style="color: #f093fb; text-align: center; margin-bottom: 30px; font-size: 2em;">
-                    👩‍🏫 LEADERBOARD GURU PEREMPUAN
-                </h2>
-                <div id="female-leaderboard"></div>
-            </div>
+/* ==========================
+   RENDER UI
+========================== */
+const listDiv = document.getElementById("list");
+let voted = localStorage.getItem("alreadyVoted");
 
-            <div style="text-align: center;">
-                <button class="reset-btn" onclick="resetVotes()">🔄 Reset Semua Vote (Admin)</button>
-            </div>
-        </div>
+function render(votes) {
+  listDiv.innerHTML = "";
+  candidates.forEach((name, i) => {
+    const count = votes[name] || 0;
+    const box = document.createElement("div");
+    box.className = "candidate";
+    box.innerHTML = `
+      <span>${i+1}. ${name}</span>
+      <span class="count">${count} suara</span>
+      <button ${voted ? "disabled" : ""} onclick="vote('${name}')">Vote</button>
+    `;
+    listDiv.appendChild(box);
+  });
+  if (voted) document.getElementById("doneMessage").style.display = "block";
+}
 
-        <div class="footer">
-            <p><strong>💻 Website Created by: Ilham</strong></p>
-            <p>🏫 PKBM MELATI - Hari Guru Nasional 2025</p>
-            <p>❤️ Terima kasih untuk semua guru yang telah mendedikasikan hidupnya untuk pendidikan</p>
-        </div>
-    </div>
+/* ==========================
+   REALTIME UPDATE
+========================== */
+onValue(ref(db, "votes"), snapshot => {
+  render(snapshot.val() || {});
+});
 
-    <!-- Vote Modal -->
-    <div id="voteModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modalTeacherName">👨‍🏫 PAK YULIUS</h2>
-                <p>Ceritakan alasan Anda memilih beliau!</p>
-            </div>
-            <form id="voteForm">
-                <div class="form-group">
-                    <label for="voterName">📝 Nama Anda (Opsional):</label>
-                    <input type="text" id="voterName" placeholder="Masukkan nama Anda...">
-                </div>
-                <div class="form-group">
-                    <label for="voteReason">💭 Alasan Anda memilih guru ini: *</label>
-                    <textarea id="voteReason" placeholder="Contoh: Beliau sangat sabar dalam mengajar dan selalu membuat pelajaran menjadi menarik..." required></textarea>
-                </div>
-                <div class="modal-buttons">
-                    <button type="button" class="modal-btn cancel" onclick="closeModal()">Batal</button>
-                    <button type="submit" class="modal-btn submit">
-                        <span id="submitText">Kirim Vote</span>
-                        <span id="submitLoading" style="display: none;" class="loading"></span>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
+/* ==========================
+   KIRIM KE TELEGRAM
+========================== */
+const chatId = "8116752882"; 
 
-    <!-- Password Modal -->
-    <div id="passwordModal" class="password-modal">
-        <div class="password-content">
-            <h2>🔐 Masukkan Password</h2>
-            <p style="color: #666; margin-bottom: 20px;">Halaman ini hanya untuk Admin</p>
-            <input type="password" id="passwordInput" placeholder="Password...">
-            <div class="modal-buttons">
-                <button class="modal-btn cancel" onclick="closePasswordModal()">Batal</button>
-                <button class="modal-btn submit" onclick="checkPassword()">Masuk</button>
-            </div>
-        </div>
-    </div>
+async function sendToTelegram(name) {
 
-    <script>
-        const TELEGRAM_BOT_TOKEN = '8075129453:AAHb75QqznKgmLTtDgThmP6pJveTphSRmKo';
-        const TELEGRAM_CHAT_ID = '8116752882';
-        const ADMIN_PASSWORD = 'yanztiandi';
+  const token = "8075129453:AAHb75QqznKgmLTtDgThmP6pJveTphSRmKo"; // 🔥 kamu tempel sendiri
 
-        const teachers = {
-            male: [
-                { id: 'yulius', name: 'PAK YULIUS', emoji: '👨‍🏫' },
-                { id: 'bobi', name: 'PAK BOBI', emoji: '👨‍🏫' },
-                { id: 'rizky', name: 'PAK RIZKY', emoji: '👨‍🏫' },
-                { id: 'supra', name: 'PAK SUPRA', emoji: '👨‍🏫' }
-            ],
-            female: [
-                { id: 'suzana', name: 'IBU SUZANA', emoji: '👩‍🏫' },
-                { id: 'nani', name: 'IBU NANI', emoji: '👩‍🏫' },
-                { id: 'yakazi', name: 'IBU YAKAZI', emoji: '👩‍🏫' },
-                { id: 'rtuki', name: 'IBU RTUKI', emoji: '👩‍🏫' }
-            ]
-        };
+  const message = `📩 Suara Masuk!\n✅ Pilihan: ${name}\n🕒 Waktu: ${new Date().toLocaleTimeString()}`;
 
-        let currentVoteData = null;
-        let isAuthenticated = false;
+  await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chat_id: chatId, text: message })
+  });
+}
 
-        function getVotes() {
-            const votes = {};
-            Object.values(teachers).flat().forEach(teacher => {
-                votes[teacher.id] = parseInt(localStorage.getItem(`vote_${teacher.id}`) || '0');
-            });
-            return votes;
-        }
+/* ==========================
+   PROSES VOTE
+========================== */
+window.vote = async function(name) {
+  if (voted) return;
 
-        function saveVote(teacherId) {
-            const currentVotes = parseInt(localStorage.getItem(`vote_${teacherId}`) || '0');
-            localStorage.setItem(`vote_${teacherId}`, (currentVotes + 1).toString());
-        }
+  const voteRef = ref(db, "votes/" + name);
+  onValue(voteRef, async snapshot => {
+    const current = snapshot.val() || 0;
+    await update(ref(db, "votes"), { [name]: current + 1 });
+  }, { onlyOnce: true });
 
-        function hasVoted(gender) {
-            return localStorage.getItem(`voted_${gender}`) !== null;
-        }
+  sendToTelegram(name);
+  localStorage.setItem("alreadyVoted", "1");
+  voted = true;
+  render({});
+};
+</script>
 
-        function markAsVoted(gender, teacherId) {
-            localStorage.setItem(`voted_${gender}`, teacherId);
-        }
-
-        function getVotedTeacher(gender) {
-            return localStorage.getItem(`voted_${gender}`);
-        }
-
-        function openVoteModal(teacherId, teacherName, gender) {
-            if (hasVoted(gender)) {
-                alert('⚠️ Anda sudah memberikan vote di kategori ini!');
-                return;
-            }
-
-            currentVoteData = { teacherId, teacherName, gender };
-            document.getElementById('modalTeacherName').textContent = teacherName;
-            document.getElementById('voteModal').classList.add('active');
-            document.getElementById('voteReason').value = '';
-            document.getElementById('voterName').value = '';
-        }
-
-        function closeModal() {
-            document.getElementById('voteModal').classList.remove('active');
-            currentVoteData = null;
-        }
-
-        async function sendToTelegram(teacherName, voterName, reason) {
-            const message = `
-🎓 *VOTE BARU - HARI GURU NASIONAL 2025*
-━━━━━━━━━━━━━━━━━━━━━
-
-👤 *Nama Voter:* ${voterName || 'Anonim'}
-
-👨‍🏫 *Guru yang Dipilih:* 
-${teacherName}
-
-💭 *Alasan:*
-${reason}
-
-━━━━━━━━━━━━━━━━━━━━━
-🏫 PKBM MELATI
-📅 ${new Date().toLocaleString('id-ID')}
-            `;
-
-            try {
-                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: message,
-                        parse_mode: 'Markdown'
-                    })
-                });
-
-                const data = await response.json();
-                return data.ok;
-            } catch (error) {
-                console.error('Error sending to Telegram:', error);
-                return false;
-            }
-        }
-
-        document.getElementById('voteForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const reason = document.getElementById('voteReason').value.trim();
-            const voterName = document.getElementById('voterName').value.trim();
-
-            if (!reason) {
-                alert('⚠️ Mohon isi alasan Anda memilih guru ini!');
-                return;
-            }
-
-            if (reason.length < 10) {
-                alert('⚠️ Alasan terlalu pendek. Minimal 10 karakter!');
-                return;
-            }
-
-            // Show loading
-            document.getElementById('submitText').style.display = 'none';
-            document.getElementById('submitLoading').style.display = 'inline-block';
-
-            // Send to Telegram
-            const success = await sendToTelegram(
-                currentVoteData.teacherName,
-                voterName,
-                reason
-            );
-
-            if (success) {
-                // Save vote
-                saveVote(currentVoteData.teacherId);
-                markAsVoted(currentVoteData.gender, currentVoteData.teacherId);
-
-                // Hide loading
-                document.getElementById('submitText').style.display = 'inline';
-                document.getElementById('submitLoading').style.display = 'none';
-
-                // Close modal
-                closeModal();
-
-                // Show success
-                alert(`✨ Terima kasih! Vote Anda untuk ${currentVoteData.teacherName} telah tercatat dan dikirim! ✨`);
-
-                // Refresh page
-                renderVotingPage();
-            } else {
-                document.getElementById('submitText').style.display = 'inline';
-                document.getElementById('submitLoading').style.display = 'none';
-                alert('❌ Gagal mengirim vote. Mohon coba lagi!');
-            }
-        });
-
-        function renderVotingPage() {
-            const votes = getVotes();
-            const votedMale = getVotedTeacher('male');
-            const votedFemale = getVotedTeacher('female');
-
-            const maleContainer = document.getElementById('male-teachers');
-            const femaleContainer = document.getElementById('female-teachers');
-
-            maleContainer.innerHTML = '';
-            femaleContainer.innerHTML = '';
-
-            teachers.male.forEach(teacher => {
-                const isVoted = votedMale === teacher.id;
-                const card = createTeacherCard(teacher, votes[teacher.id], 'male', isVoted);
-                maleContainer.appendChild(card);
-            });
-
-            teachers.female.forEach(teacher => {
-                const isVoted = votedFemale === teacher.id;
-                const card = createTeacherCard(teacher, votes[teacher.id], 'female', isVoted);
-                femaleContainer.appendChild(card);
-            });
-        }
-
-        function createTeacherCard(teacher, voteCount, gender, isVoted) {
-            const card = document.createElement('div');
-            card.className = `teacher-card${isVoted ? ' voted' : ''}`;
-            
-            const votePlural = voteCount !== 1 ? 's' : '';
-            
-            card.innerHTML = `
-                <div class="teacher-name">${teacher.emoji} ${teacher.name}</div>
-                <button class="vote-btn" ${isVoted ? 'disabled' : ''}>
-                    ${isVoted ? '✓ SUDAH VOTE' : 'VOTE'}
-                </button>
-                <div class="vote-count">${voteCount} Vote${votePlural}</div>
-            `;
-
-            if (!isVoted) {
-                card.onclick = function() {
-                    openVoteModal(teacher.id,
+</body>
+</html>
