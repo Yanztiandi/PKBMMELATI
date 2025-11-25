@@ -2,31 +2,89 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Voting Guru Favorit</title>
+<title>Voting Guru Favorit - PKBM MELATI</title>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
 <style>
-  body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
-  h1 { text-align: center; }
-  .candidate { background: white; padding: 12px; margin: 10px 0; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
-  button { padding: 8px 14px; border: none; background: #007bff; color: white; border-radius: 6px; cursor: pointer; }
-  button:disabled { background: gray; cursor: not-allowed; }
-  .count { font-weight: bold; }
-  #doneMessage { text-align: center; margin-top: 20px; font-size: 18px; color: green; display: none; }
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 20px;
+    margin: 0;
+    color: #fff;
+  }
+  .container {
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    color: #333;
+    padding: 20px;
+    border-radius: 12px;
+  }
+  .logo-wrap { text-align: center; margin-bottom: 10px; }
+  .logo {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #667eea;
+  }
+  h1 { text-align: center; color:#667eea; font-size:22px; }
+  h2 { text-align:center; margin-top:-5px; color:#764ba2; }
+
+  .candidate {
+    background: #667eea;
+    color: white;
+    padding: 14px;
+    margin: 10px 0;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  button {
+    padding: 8px 16px;
+    border: none;
+    background: white;
+    color: #667eea;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  button:disabled {
+    background: #ccc;
+    color: #555;
+    cursor: not-allowed;
+  }
+  #doneMessage {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 18px;
+    color: green;
+    display: none;
+  }
 </style>
 </head>
 <body>
 
-<h1>Voting Guru Favorit</h1>
-<div id="list"></div>
-<div id="doneMessage">Terima kasih, suara Anda telah terekam ✅</div>
+<div class="container">
 
-<script type="module">
-/* ==========================
-   FIREBASE SETUP
-========================== */
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+  <div class="logo-wrap">
+    <img src="https://files.catbox.moe/l0f8t2.jpg" class="logo">
+  </div>
 
-// firebaseConfig kamu (SUDAH ADA)
+  <h1>🎓 VOTING GURU TERFAVORIT 🎓</h1>
+  <h2>PKBM MELATI</h2>
+
+  <div id="list"></div>
+  <div id="doneMessage">Terima kasih, suara Anda telah terekam ✅</div>
+
+</div>
+
+<script>
+/* === FIREBASE CONFIG === */
 const firebaseConfig = {
   apiKey: "AIzaSyBW8G3BOTmZxCc7IkjgK40XNvSqNxJqma0",
   authDomain: "pkbm-melatii.firebaseapp.com",
@@ -34,16 +92,13 @@ const firebaseConfig = {
   storageBucket: "pkbm-melatii.firebasestorage.app",
   messagingSenderId: "877041628308",
   appId: "1:877041628308:web:c80972df07c0504e007081",
-  measurementId: "G-LFH125W36H",
   databaseURL: "https://pkbm-melatii-default-rtdb.firebaseio.com"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-/* ==========================
-   DATA KANDIDAT
-========================== */
+/* === DATA KANDIDAT === */
 const candidates = [
   "Bobi Hartanto, S.Pd",
   "Suprayetno, S.Pd",
@@ -53,12 +108,10 @@ const candidates = [
   "Innani Sumartini, S.Pd"
 ];
 
-/* ==========================
-   RENDER UI
-========================== */
 const listDiv = document.getElementById("list");
 let voted = localStorage.getItem("alreadyVoted");
 
+/* === RENDER LIST === */
 function render(votes) {
   listDiv.innerHTML = "";
   candidates.forEach((name, i) => {
@@ -67,56 +120,48 @@ function render(votes) {
     box.className = "candidate";
     box.innerHTML = `
       <span>${i+1}. ${name}</span>
-      <span class="count">${count} suara</span>
+      <span><b>${count}</b> suara</span>
       <button ${voted ? "disabled" : ""} onclick="vote('${name}')">Vote</button>
     `;
     listDiv.appendChild(box);
   });
+
   if (voted) document.getElementById("doneMessage").style.display = "block";
 }
 
-/* ==========================
-   REALTIME UPDATE
-========================== */
-onValue(ref(db, "votes"), snapshot => {
-  render(snapshot.val() || {});
+/* === REALTIME DATABASE === */
+db.ref("votes").on("value", snap => {
+  render(snap.val() || {});
 });
 
-/* ==========================
-   KIRIM KE TELEGRAM
-========================== */
-const chatId = "8116752882"; 
+/* === TELEGRAM === */
+const botToken = "8075129453:AAHb75QqznKgmLTtDgThmP6pJveTphSRmKo";
+const chatId = "8116752882";
 
-async function sendToTelegram(name) {
-
-  const token = "8075129453:AAHb75QqznKgmLTtDgThmP6pJveTphSRmKo"; // 🔥 kamu tempel sendiri
-
-  const message = `📩 Suara Masuk!\n✅ Pilihan: ${name}\n🕒 Waktu: ${new Date().toLocaleTimeString()}`;
-
-  await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+function sendToTelegram(name) {
+  const message = `📩 Suara Masuk!\n✅ Pilihan: ${name}\n🏫 PKBM MELATI\n🕒 ${new Date().toLocaleTimeString()}`;
+  fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {"Content-Type": "application/json"},
     body: JSON.stringify({ chat_id: chatId, text: message })
   });
 }
 
-/* ==========================
-   PROSES VOTE
-========================== */
-window.vote = async function(name) {
+/* === PROSES VOTE === */
+function vote(name) {
   if (voted) return;
 
-  const voteRef = ref(db, "votes/" + name);
-  onValue(voteRef, async snapshot => {
+  const refVote = db.ref("votes/" + name);
+  refVote.once("value").then(snapshot => {
     const current = snapshot.val() || 0;
-    await update(ref(db, "votes"), { [name]: current + 1 });
-  }, { onlyOnce: true });
+    refVote.set(current + 1);
+  });
 
   sendToTelegram(name);
   localStorage.setItem("alreadyVoted", "1");
   voted = true;
-  render({});
-};
+  document.getElementById("doneMessage").style.display = "block";
+}
 </script>
 
 </body>
