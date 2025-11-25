@@ -61,6 +61,7 @@
             gap: 15px;
             justify-content: center;
             margin-top: 20px;
+            flex-wrap: wrap;
         }
 
         .nav-btn {
@@ -135,7 +136,7 @@
         }
 
         .teacher-card.voted::after {
-            content: '✓ ANDA SUDAH VOTE';
+            content: '✓ SUDAH VOTE';
             position: absolute;
             top: 10px;
             right: 10px;
@@ -179,9 +180,9 @@
             transition: all 0.3s ease;
         }
 
-        .vote-btn:hover {
-            background: #f093fb;
-            color: white;
+        .vote-btn:hover:not(:disabled) {
+            background: #ffd700;
+            color: #764ba2;
             transform: scale(1.1);
         }
 
@@ -198,11 +199,11 @@
             font-weight: bold;
         }
 
-        .results-container {
+        #results-page {
             display: none;
         }
 
-        .results-container.active {
+        #results-page.active {
             display: block;
         }
 
@@ -238,6 +239,7 @@
             color: #764ba2;
             font-size: 1.2em;
             padding: 25px;
+            animation: winner 2s infinite;
         }
 
         .leaderboard-item.first::before {
@@ -362,18 +364,28 @@
             }
         }
 
+        @keyframes winner {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+            }
+        }
+
         .confetti {
             position: fixed;
             width: 10px;
             height: 10px;
             background: #f093fb;
-            position: absolute;
-            animation: confetti-fall 3s linear infinite;
+            animation: confetti-fall 3s linear;
+            pointer-events: none;
         }
 
         @keyframes confetti-fall {
             to {
                 transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
             }
         }
 
@@ -393,10 +405,6 @@
             
             .teachers-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .nav-buttons {
-                flex-direction: column;
             }
         }
     </style>
@@ -426,20 +434,18 @@
                 <h2 style="color: #4299e1; text-align: center; margin-bottom: 20px; font-size: 2em;">
                     👨‍🏫 KATEGORI GURU LAKI-LAKI
                 </h2>
-                <div class="teachers-grid" id="male-teachers">
-                </div>
+                <div class="teachers-grid" id="male-teachers"></div>
             </div>
 
             <div class="voting-section female-section">
                 <h2 style="color: #f093fb; text-align: center; margin-bottom: 20px; font-size: 2em;">
                     👩‍🏫 KATEGORI GURU PEREMPUAN
                 </h2>
-                <div class="teachers-grid" id="female-teachers">
-                </div>
+                <div class="teachers-grid" id="female-teachers"></div>
             </div>
         </div>
 
-        <div id="results-page" class="results-container">
+        <div id="results-page">
             <div class="section-title">
                 🏆 HASIL VOTING GURU TERBAIK 2025 🏆
             </div>
@@ -486,68 +492,47 @@
             ]
         };
 
-        async function loadVotes() {
+        // Fungsi untuk mendapatkan semua votes dari localStorage
+        function getVotes() {
             const votes = {};
-            for (const gender in teachers) {
-                for (const teacher of teachers[gender]) {
-                    try {
-                        const result = await window.storage.get(`vote_${teacher.id}`);
-                        votes[teacher.id] = result ? parseInt(result.value) : 0;
-                    } catch {
-                        votes[teacher.id] = 0;
-                    }
-                }
-            }
+            Object.values(teachers).flat().forEach(teacher => {
+                votes[teacher.id] = parseInt(localStorage.getItem(`vote_${teacher.id}`) || '0');
+            });
             return votes;
         }
 
-        async function saveVote(teacherId, count) {
-            try {
-                await window.storage.set(`vote_${teacherId}`, count.toString());
-            } catch (error) {
-                console.error('Error saving vote:', error);
-            }
+        // Fungsi untuk menyimpan vote
+        function saveVote(teacherId) {
+            const currentVotes = parseInt(localStorage.getItem(`vote_${teacherId}`) || '0');
+            localStorage.setItem(`vote_${teacherId}`, (currentVotes + 1).toString());
         }
 
-        async function hasVoted(gender) {
-            try {
-                const result = await window.storage.get(`voted_${gender}`);
-                return result !== null;
-            } catch {
-                return false;
-            }
+        // Fungsi untuk cek apakah sudah vote di kategori tertentu
+        function hasVoted(gender) {
+            return localStorage.getItem(`voted_${gender}`) !== null;
         }
 
-        async function markAsVoted(gender, teacherId) {
-            try {
-                await window.storage.set(`voted_${gender}`, teacherId);
-            } catch (error) {
-                console.error('Error marking vote:', error);
-            }
+        // Fungsi untuk menandai sudah vote
+        function markAsVoted(gender, teacherId) {
+            localStorage.setItem(`voted_${gender}`, teacherId);
         }
 
-        async function getVotedTeacher(gender) {
-            try {
-                const result = await window.storage.get(`voted_${gender}`);
-                return result ? result.value : null;
-            } catch {
-                return null;
-            }
+        // Fungsi untuk mendapatkan guru yang sudah di-vote
+        function getVotedTeacher(gender) {
+            return localStorage.getItem(`voted_${gender}`);
         }
 
-        async function vote(teacherId, teacherName, gender) {
-            const voted = await hasVoted(gender);
-            if (voted) {
+        // Fungsi untuk vote
+        function vote(teacherId, teacherName, gender, element) {
+            if (hasVoted(gender)) {
                 alert('⚠️ Anda sudah memberikan vote di kategori ini!');
                 return;
             }
 
-            const votes = await loadVotes();
-            votes[teacherId]++;
-            await saveVote(teacherId, votes[teacherId]);
-            await markAsVoted(gender, teacherId);
+            saveVote(teacherId);
+            markAsVoted(gender, teacherId);
 
-            createConfetti(event.clientX, event.clientY);
+            createConfetti(element);
 
             const genderText = gender === 'male' ? 'Guru Laki-laki' : 'Guru Perempuan';
             alert(`✨ Terima kasih! Vote Anda untuk ${teacherName} (${genderText}) telah tercatat! ✨`);
@@ -555,10 +540,11 @@
             renderVotingPage();
         }
 
-        async function renderVotingPage() {
-            const votes = await loadVotes();
-            const votedMale = await getVotedTeacher('male');
-            const votedFemale = await getVotedTeacher('female');
+        // Render halaman voting
+        function renderVotingPage() {
+            const votes = getVotes();
+            const votedMale = getVotedTeacher('male');
+            const votedFemale = getVotedTeacher('female');
 
             const maleContainer = document.getElementById('male-teachers');
             const femaleContainer = document.getElementById('female-teachers');
@@ -566,50 +552,58 @@
             maleContainer.innerHTML = '';
             femaleContainer.innerHTML = '';
 
-            for (const teacher of teachers.male) {
+            teachers.male.forEach(teacher => {
                 const isVoted = votedMale === teacher.id;
-                const card = createTeacherCard(teacher, votes[teacher.id] || 0, 'male', isVoted);
+                const card = createTeacherCard(teacher, votes[teacher.id], 'male', isVoted);
                 maleContainer.appendChild(card);
-            }
+            });
 
-            for (const teacher of teachers.female) {
+            teachers.female.forEach(teacher => {
                 const isVoted = votedFemale === teacher.id;
-                const card = createTeacherCard(teacher, votes[teacher.id] || 0, 'female', isVoted);
+                const card = createTeacherCard(teacher, votes[teacher.id], 'female', isVoted);
                 femaleContainer.appendChild(card);
-            }
+            });
         }
 
+        // Membuat kartu guru
         function createTeacherCard(teacher, voteCount, gender, isVoted) {
             const card = document.createElement('div');
             card.className = `teacher-card${isVoted ? ' voted' : ''}`;
+            
+            const votePlural = voteCount !== 1 ? 's' : '';
+            
             card.innerHTML = `
                 <div class="teacher-name">${teacher.emoji} ${teacher.name}</div>
                 <button class="vote-btn" ${isVoted ? 'disabled' : ''}>
                     ${isVoted ? '✓ SUDAH VOTE' : 'VOTE'}
                 </button>
-                <div class="vote-count">${voteCount} Vote${voteCount !== 1 ? 's' : ''}</div>
+                <div class="vote-count">${voteCount} Vote${votePlural}</div>
             `;
 
             if (!isVoted) {
-                card.onclick = () => vote(teacher.id, teacher.name, gender);
+                card.onclick = function(e) {
+                    vote(teacher.id, teacher.name, gender, e.currentTarget);
+                };
             }
 
             return card;
         }
 
-        async function renderResults() {
-            const votes = await loadVotes();
+        // Render hasil voting
+        function renderResults() {
+            const votes = getVotes();
 
-            const maleVotes = teachers.male.map(t => ({ ...t, votes: votes[t.id] || 0 }))
+            const maleVotes = teachers.male.map(t => ({ ...t, votes: votes[t.id] }))
                 .sort((a, b) => b.votes - a.votes);
             
-            const femaleVotes = teachers.female.map(t => ({ ...t, votes: votes[t.id] || 0 }))
+            const femaleVotes = teachers.female.map(t => ({ ...t, votes: votes[t.id] }))
                 .sort((a, b) => b.votes - a.votes);
 
             renderLeaderboard('male-leaderboard', maleVotes);
             renderLeaderboard('female-leaderboard', femaleVotes);
         }
 
+        // Render leaderboard
         function renderLeaderboard(containerId, sortedTeachers) {
             const container = document.getElementById(containerId);
             container.innerHTML = '';
@@ -618,9 +612,10 @@
 
             sortedTeachers.forEach((teacher, index) => {
                 const item = document.createElement('div');
-                item.className = `leaderboard-item${index === 0 ? ' first' : ''}`;
+                item.className = `leaderboard-item${index === 0 && teacher.votes > 0 ? ' first' : ''}`;
                 
                 const percentage = (teacher.votes / maxVotes) * 100;
+                const votePlural = teacher.votes !== 1 ? 's' : '';
                 
                 item.innerHTML = `
                     <div class="leaderboard-rank">#${index + 1}</div>
@@ -637,6 +632,7 @@
             });
         }
 
+        // Show page
         function showPage(page) {
             const votingPage = document.getElementById('voting-page');
             const resultsPage = document.getElementById('results-page');
@@ -645,19 +641,22 @@
             if (page === 'voting') {
                 votingPage.style.display = 'block';
                 resultsPage.style.display = 'none';
+                resultsPage.classList.remove('active');
                 buttons[0].classList.add('active');
                 buttons[1].classList.remove('active');
                 renderVotingPage();
             } else {
                 votingPage.style.display = 'none';
                 resultsPage.style.display = 'block';
+                resultsPage.classList.add('active');
                 buttons[0].classList.remove('active');
                 buttons[1].classList.add('active');
                 renderResults();
             }
         }
 
-        async function resetVotes() {
+        // Reset semua votes
+        function resetVotes() {
             if (!confirm('⚠️ Apakah Anda yakin ingin mereset semua vote? Tindakan ini tidak dapat dibatalkan!')) {
                 return;
             }
@@ -666,24 +665,19 @@
                 return;
             }
 
-            try {
-                for (const gender in teachers) {
-                    for (const teacher of teachers[gender]) {
-                        await window.storage.delete(`vote_${teacher.id}`);
-                    }
-                }
-                await window.storage.delete('voted_male');
-                await window.storage.delete('voted_female');
-
-                alert('✅ Semua vote berhasil direset!');
-                showPage('voting');
-            } catch (error) {
-                alert('❌ Gagal mereset vote: ' + error.message);
-            }
+            localStorage.clear();
+            alert('✅ Semua vote berhasil direset!');
+            showPage('voting');
         }
 
-        function createConfetti(x, y) {
+        // Create confetti effect
+        function createConfetti(element) {
+            const rect = element.getBoundingClientRect();
+            const x = rect.left + rect.width / 2;
+            const y = rect.top + rect.height / 2;
+
             const colors = ['#f093fb', '#f5576c', '#667eea', '#764ba2', '#ffd700', '#ff69b4'];
+            
             for (let i = 0; i < 30; i++) {
                 const confetti = document.createElement('div');
                 confetti.className = 'confetti';
@@ -691,7 +685,7 @@
                 confetti.style.top = y + 'px';
                 confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
                 confetti.style.animationDelay = Math.random() * 0.3 + 's';
-                confetti.style.transform = `translateX(${(Math.random() - 0.5) * 200}px)`;
+                confetti.style.transform = `translate(${(Math.random() - 0.5) * 200}px, 0) rotate(${Math.random() * 360}deg)`;
                 document.body.appendChild(confetti);
                 
                 setTimeout(() => {
@@ -700,6 +694,7 @@
             }
         }
 
+        // Initialize
         renderVotingPage();
     </script>
 </body>
