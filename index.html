@@ -199,6 +199,175 @@
             font-weight: bold;
         }
 
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s ease;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .modal-header p {
+            color: #764ba2;
+            font-size: 1.2em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            font-size: 1em;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #f093fb;
+            box-shadow: 0 0 15px rgba(240, 147, 251, 0.3);
+        }
+
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input[type="text"]:focus {
+            outline: none;
+            border-color: #f093fb;
+            box-shadow: 0 0 15px rgba(240, 147, 251, 0.3);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+        .modal-btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn.submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .modal-btn.submit:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .modal-btn.cancel {
+            background: #ccc;
+            color: #666;
+        }
+
+        .modal-btn.cancel:hover {
+            background: #999;
+        }
+
+        /* Password Modal */
+        .password-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+        }
+
+        .password-modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .password-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .password-content h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .password-content input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
         #results-page {
             display: none;
         }
@@ -326,6 +495,20 @@
             transform: scale(1.05);
         }
 
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         @keyframes fadeInDown {
             from {
                 opacity: 0;
@@ -338,39 +521,34 @@
         }
 
         @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
             from {
+                transform: translateY(-50px);
                 opacity: 0;
             }
             to {
+                transform: translateY(0);
                 opacity: 1;
             }
         }
 
         @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         @keyframes shine {
-            0% {
-                left: -50%;
-            }
-            100% {
-                left: 150%;
-            }
+            0% { left: -50%; }
+            100% { left: 150%; }
         }
 
         @keyframes winner {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-            }
-            50% {
-                box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
-            }
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.8); }
         }
 
         .confetti {
@@ -390,22 +568,11 @@
         }
 
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8em;
-            }
-            
-            .header h2 {
-                font-size: 1.3em;
-            }
-            
-            .greeting {
-                font-size: 1em;
-                padding: 20px;
-            }
-            
-            .teachers-grid {
-                grid-template-columns: 1fr;
-            }
+            .header h1 { font-size: 1.8em; }
+            .header h2 { font-size: 1.3em; }
+            .greeting { font-size: 1em; padding: 20px; }
+            .teachers-grid { grid-template-columns: 1fr; }
+            .modal-content { padding: 25px; }
         }
     </style>
 </head>
@@ -426,9 +593,7 @@
         </div>
 
         <div id="voting-page">
-            <div class="section-title">
-                🏆 VOTE GURU TERBAIK 2025 🏆
-            </div>
+            <div class="section-title">🏆 VOTE GURU TERBAIK 2025 🏆</div>
 
             <div class="voting-section male-section">
                 <h2 style="color: #4299e1; text-align: center; margin-bottom: 20px; font-size: 2em;">
@@ -446,9 +611,7 @@
         </div>
 
         <div id="results-page">
-            <div class="section-title">
-                🏆 HASIL VOTING GURU TERBAIK 2025 🏆
-            </div>
+            <div class="section-title">🏆 HASIL VOTING GURU TERBAIK 2025 🏆</div>
 
             <div class="leaderboard male-section">
                 <h2 style="color: #4299e1; text-align: center; margin-bottom: 30px; font-size: 2em;">
@@ -476,7 +639,51 @@
         </div>
     </div>
 
+    <!-- Vote Modal -->
+    <div id="voteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTeacherName">👨‍🏫 PAK YULIUS</h2>
+                <p>Ceritakan alasan Anda memilih beliau!</p>
+            </div>
+            <form id="voteForm">
+                <div class="form-group">
+                    <label for="voterName">📝 Nama Anda (Opsional):</label>
+                    <input type="text" id="voterName" placeholder="Masukkan nama Anda...">
+                </div>
+                <div class="form-group">
+                    <label for="voteReason">💭 Alasan Anda memilih guru ini: *</label>
+                    <textarea id="voteReason" placeholder="Contoh: Beliau sangat sabar dalam mengajar dan selalu membuat pelajaran menjadi menarik..." required></textarea>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="modal-btn cancel" onclick="closeModal()">Batal</button>
+                    <button type="submit" class="modal-btn submit">
+                        <span id="submitText">Kirim Vote</span>
+                        <span id="submitLoading" style="display: none;" class="loading"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Password Modal -->
+    <div id="passwordModal" class="password-modal">
+        <div class="password-content">
+            <h2>🔐 Masukkan Password</h2>
+            <p style="color: #666; margin-bottom: 20px;">Halaman ini hanya untuk Admin</p>
+            <input type="password" id="passwordInput" placeholder="Password...">
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" onclick="closePasswordModal()">Batal</button>
+                <button class="modal-btn submit" onclick="checkPassword()">Masuk</button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        const TELEGRAM_BOT_TOKEN = '8075129453:AAHb75QqznKgmLTtDgThmP6pJveTphSRmKo';
+        const TELEGRAM_CHAT_ID = '8116752882';
+        const ADMIN_PASSWORD = 'yanztiandi';
+
         const teachers = {
             male: [
                 { id: 'yulius', name: 'PAK YULIUS', emoji: '👨‍🏫' },
@@ -492,7 +699,9 @@
             ]
         };
 
-        // Fungsi untuk mendapatkan semua votes dari localStorage
+        let currentVoteData = null;
+        let isAuthenticated = false;
+
         function getVotes() {
             const votes = {};
             Object.values(teachers).flat().forEach(teacher => {
@@ -501,46 +710,131 @@
             return votes;
         }
 
-        // Fungsi untuk menyimpan vote
         function saveVote(teacherId) {
             const currentVotes = parseInt(localStorage.getItem(`vote_${teacherId}`) || '0');
             localStorage.setItem(`vote_${teacherId}`, (currentVotes + 1).toString());
         }
 
-        // Fungsi untuk cek apakah sudah vote di kategori tertentu
         function hasVoted(gender) {
             return localStorage.getItem(`voted_${gender}`) !== null;
         }
 
-        // Fungsi untuk menandai sudah vote
         function markAsVoted(gender, teacherId) {
             localStorage.setItem(`voted_${gender}`, teacherId);
         }
 
-        // Fungsi untuk mendapatkan guru yang sudah di-vote
         function getVotedTeacher(gender) {
             return localStorage.getItem(`voted_${gender}`);
         }
 
-        // Fungsi untuk vote
-        function vote(teacherId, teacherName, gender, element) {
+        function openVoteModal(teacherId, teacherName, gender) {
             if (hasVoted(gender)) {
                 alert('⚠️ Anda sudah memberikan vote di kategori ini!');
                 return;
             }
 
-            saveVote(teacherId);
-            markAsVoted(gender, teacherId);
-
-            createConfetti(element);
-
-            const genderText = gender === 'male' ? 'Guru Laki-laki' : 'Guru Perempuan';
-            alert(`✨ Terima kasih! Vote Anda untuk ${teacherName} (${genderText}) telah tercatat! ✨`);
-
-            renderVotingPage();
+            currentVoteData = { teacherId, teacherName, gender };
+            document.getElementById('modalTeacherName').textContent = teacherName;
+            document.getElementById('voteModal').classList.add('active');
+            document.getElementById('voteReason').value = '';
+            document.getElementById('voterName').value = '';
         }
 
-        // Render halaman voting
+        function closeModal() {
+            document.getElementById('voteModal').classList.remove('active');
+            currentVoteData = null;
+        }
+
+        async function sendToTelegram(teacherName, voterName, reason) {
+            const message = `
+🎓 *VOTE BARU - HARI GURU NASIONAL 2025*
+━━━━━━━━━━━━━━━━━━━━━
+
+👤 *Nama Voter:* ${voterName || 'Anonim'}
+
+👨‍🏫 *Guru yang Dipilih:* 
+${teacherName}
+
+💭 *Alasan:*
+${reason}
+
+━━━━━━━━━━━━━━━━━━━━━
+🏫 PKBM MELATI
+📅 ${new Date().toLocaleString('id-ID')}
+            `;
+
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+
+                const data = await response.json();
+                return data.ok;
+            } catch (error) {
+                console.error('Error sending to Telegram:', error);
+                return false;
+            }
+        }
+
+        document.getElementById('voteForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const reason = document.getElementById('voteReason').value.trim();
+            const voterName = document.getElementById('voterName').value.trim();
+
+            if (!reason) {
+                alert('⚠️ Mohon isi alasan Anda memilih guru ini!');
+                return;
+            }
+
+            if (reason.length < 10) {
+                alert('⚠️ Alasan terlalu pendek. Minimal 10 karakter!');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('submitText').style.display = 'none';
+            document.getElementById('submitLoading').style.display = 'inline-block';
+
+            // Send to Telegram
+            const success = await sendToTelegram(
+                currentVoteData.teacherName,
+                voterName,
+                reason
+            );
+
+            if (success) {
+                // Save vote
+                saveVote(currentVoteData.teacherId);
+                markAsVoted(currentVoteData.gender, currentVoteData.teacherId);
+
+                // Hide loading
+                document.getElementById('submitText').style.display = 'inline';
+                document.getElementById('submitLoading').style.display = 'none';
+
+                // Close modal
+                closeModal();
+
+                // Show success
+                alert(`✨ Terima kasih! Vote Anda untuk ${currentVoteData.teacherName} telah tercatat dan dikirim! ✨`);
+
+                // Refresh page
+                renderVotingPage();
+            } else {
+                document.getElementById('submitText').style.display = 'inline';
+                document.getElementById('submitLoading').style.display = 'none';
+                alert('❌ Gagal mengirim vote. Mohon coba lagi!');
+            }
+        });
+
         function renderVotingPage() {
             const votes = getVotes();
             const votedMale = getVotedTeacher('male');
@@ -565,7 +859,6 @@
             });
         }
 
-        // Membuat kartu guru
         function createTeacherCard(teacher, voteCount, gender, isVoted) {
             const card = document.createElement('div');
             card.className = `teacher-card${isVoted ? ' voted' : ''}`;
@@ -581,121 +874,5 @@
             `;
 
             if (!isVoted) {
-                card.onclick = function(e) {
-                    vote(teacher.id, teacher.name, gender, e.currentTarget);
-                };
-            }
-
-            return card;
-        }
-
-        // Render hasil voting
-        function renderResults() {
-            const votes = getVotes();
-
-            const maleVotes = teachers.male.map(t => ({ ...t, votes: votes[t.id] }))
-                .sort((a, b) => b.votes - a.votes);
-            
-            const femaleVotes = teachers.female.map(t => ({ ...t, votes: votes[t.id] }))
-                .sort((a, b) => b.votes - a.votes);
-
-            renderLeaderboard('male-leaderboard', maleVotes);
-            renderLeaderboard('female-leaderboard', femaleVotes);
-        }
-
-        // Render leaderboard
-        function renderLeaderboard(containerId, sortedTeachers) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = '';
-
-            const maxVotes = Math.max(...sortedTeachers.map(t => t.votes), 1);
-
-            sortedTeachers.forEach((teacher, index) => {
-                const item = document.createElement('div');
-                item.className = `leaderboard-item${index === 0 && teacher.votes > 0 ? ' first' : ''}`;
-                
-                const percentage = (teacher.votes / maxVotes) * 100;
-                const votePlural = teacher.votes !== 1 ? 's' : '';
-                
-                item.innerHTML = `
-                    <div class="leaderboard-rank">#${index + 1}</div>
-                    <div class="leaderboard-info">
-                        <div class="leaderboard-name">${teacher.emoji} ${teacher.name}</div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: ${percentage}%"></div>
-                        </div>
-                    </div>
-                    <div class="leaderboard-votes">${teacher.votes} 🗳️</div>
-                `;
-                
-                container.appendChild(item);
-            });
-        }
-
-        // Show page
-        function showPage(page) {
-            const votingPage = document.getElementById('voting-page');
-            const resultsPage = document.getElementById('results-page');
-            const buttons = document.querySelectorAll('.nav-btn');
-
-            if (page === 'voting') {
-                votingPage.style.display = 'block';
-                resultsPage.style.display = 'none';
-                resultsPage.classList.remove('active');
-                buttons[0].classList.add('active');
-                buttons[1].classList.remove('active');
-                renderVotingPage();
-            } else {
-                votingPage.style.display = 'none';
-                resultsPage.style.display = 'block';
-                resultsPage.classList.add('active');
-                buttons[0].classList.remove('active');
-                buttons[1].classList.add('active');
-                renderResults();
-            }
-        }
-
-        // Reset semua votes
-        function resetVotes() {
-            if (!confirm('⚠️ Apakah Anda yakin ingin mereset semua vote? Tindakan ini tidak dapat dibatalkan!')) {
-                return;
-            }
-
-            if (!confirm('🔐 Konfirmasi sekali lagi: Reset SEMUA vote?')) {
-                return;
-            }
-
-            localStorage.clear();
-            alert('✅ Semua vote berhasil direset!');
-            showPage('voting');
-        }
-
-        // Create confetti effect
-        function createConfetti(element) {
-            const rect = element.getBoundingClientRect();
-            const x = rect.left + rect.width / 2;
-            const y = rect.top + rect.height / 2;
-
-            const colors = ['#f093fb', '#f5576c', '#667eea', '#764ba2', '#ffd700', '#ff69b4'];
-            
-            for (let i = 0; i < 30; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = x + 'px';
-                confetti.style.top = y + 'px';
-                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.animationDelay = Math.random() * 0.3 + 's';
-                confetti.style.transform = `translate(${(Math.random() - 0.5) * 200}px, 0) rotate(${Math.random() * 360}deg)`;
-                document.body.appendChild(confetti);
-                
-                setTimeout(() => {
-                    confetti.remove();
-                }, 3000);
-            }
-        }
-
-        // Initialize
-        renderVotingPage();
-    </script>
-</body>
-</html>
+                card.onclick = function() {
+                    openVoteModal(teacher.id,
