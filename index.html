@@ -1,132 +1,224 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hari Guru Nasional 2025 - PKBM MELATI</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hari Guru Nasional - Vote Guru Terbaik PKBM MELATI</title>
 
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-
-<style>
-body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);margin:0;padding:15px;}
-.container{max-width:1000px;margin:0 auto;}
-.header{background:white;border-radius:15px;padding:25px;text-align:center;margin-bottom:20px;box-shadow:0 5px 15px rgba(0,0,0,0.2);}
-.header h1{color:#667eea;font-size:1.8em;margin-bottom:10px;}
-.header h2{color:#764ba2;font-size:1.4em;margin-bottom:15px;}
-.greeting{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);color:white;padding:20px;border-radius:10px;font-size:1em;line-height:1.5;}
-.section-title{background:white;color:#667eea;padding:15px;border-radius:10px;text-align:center;font-size:1.5em;margin:20px 0 15px;font-weight:bold;box-shadow:0 3px 10px rgba(0,0,0,0.1);}
-.voting-section{background:white;border-radius:15px;padding:20px;margin-bottom:20px;box-shadow:0 5px 15px rgba(0,0,0,0.2);}
-.category-title{text-align:center;margin-bottom:15px;font-size:1.5em;font-weight:bold;}
-.male-section{border-top:4px solid #4299e1;}
-.female-section{border-top:4px solid #f093fb;}
-.male-section .category-title{color:#4299e1;}
-.female-section .category-title{color:#f093fb;}
-.teachers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:15px;}
-.teacher-card{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:transform 0.3s;}
-.teacher-card:hover{transform:scale(1.05);box-shadow:0 8px 20px rgba(0,0,0,0.3);}
-.teacher-name{color:white;font-size:1.2em;font-weight:bold;margin-bottom:10px;}
-.vote-btn{background:white;color:#667eea;border:none;padding:10px 25px;border-radius:20px;font-size:1em;font-weight:bold;cursor:pointer;width:100%;}
-.vote-count{color:white;margin-top:8px;font-size:0.9em;}
-.footer{background:white;border-radius:12px;padding:20px;text-align:center;margin-top:20px;}
-</style>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4CAF50, #2196F3);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            overflow-x: hidden;
+            animation: bgShift 10s infinite alternate;
+        }
+        @keyframes bgShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        header img {
+            width: 120px;
+            border-radius: 10px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        .guru-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        @media (max-width: 600px) {
+            .guru-list { grid-template-columns: 1fr; }
+        }
+        .guru-card {
+            background: linear-gradient(145deg, #ffffff, #e0e0e0);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .guru-card img {
+            width: 100px; height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        button {
+            background: linear-gradient(45deg, #4CAF50, #2196F3);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover { transform: scale(1.05); }
+        #results {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px;
+        }
+    </style>
 </head>
 <body>
 
+<header>
+    <img src="https://files.catbox.moe/l0f8t2.jpg">
+    <h1>Hari Guru Nasional</h1>
+    <p>Vote Guru Terbaik di Sekolah PKBM MELATI</p>
+</header>
+
 <div class="container">
-<div class="header">
-<h1>🎓 SELAMAT HARI GURU NASIONAL 2025 🎓</h1>
-<h2>PKBM MELATI</h2>
-<div class="greeting">
-<p><strong>Voting Guru Terbaik PKBM Melati 🌟</strong></p>
-<p>Pilih guru favoritmu dan berikan apresiasi terbaik ❤️</p>
-</div>
+    <h2>Pilih Guru Terbaik Anda!</h2>
+    <p>Silakan pilih satu guru dari daftar di bawah ini.</p>
+    
+    <div class="guru-list">
+
+        <div class="guru-card">
+            <img src="https://files.catbox.moe/xzodgz.jpg">
+            <h3>Bobi Hartanto, S.Pd</h3>
+            <button onclick="vote('Bobi Hartanto, S.Pd')">Vote</button>
+        </div>
+
+        <div class="guru-card">
+            <img src="https://files.catbox.moe/n32lar.jpg">
+            <h3>Suprayetno, S.Pd</h3>
+            <button onclick="vote('Suprayetno, S.Pd')">Vote</button>
+        </div>
+
+        <div class="guru-card">
+            <img src="https://files.catbox.moe/s6kg42.jpg">
+            <h3>Dra. Suzana</h3>
+            <button onclick="vote('Dra. Suzana')">Vote</button>
+        </div>
+
+        <div class="guru-card">
+            <img src="https://files.catbox.moe/c2vey4.jpg">
+            <h3>Dra. Maznah</h3>
+            <button onclick="vote('Dra. Maznah')">Vote</button>
+        </div>
+
+        <div class="guru-card">
+            <img src="https://files.catbox.moe/0h9moi.jpg">
+            <h3>Dra. Fajarida, LD</h3>
+            <button onclick="vote('Dra. Fajarida, LD')">Vote</button>
+        </div>
+
+        <div class="guru-card">
+            <img src="https://files.catbox.moe/qn41a5.jpg">
+            <h3>Innani Sumartini, S.Pd</h3>
+            <button onclick="vote('Innani Sumartini, S.Pd')">Vote</button>
+        </div>
+
+    </div>
+
+    <div id="results">
+        <h3>Hasil Voting Sementara:</h3>
+        <p id="vote-count">Belum ada vote.</p>
+    </div>
 </div>
 
-<div class="section-title">🏆 VOTE GURU TERBAIK 2025 🏆</div>
-
-<div class="voting-section male-section">
-<div class="category-title">👨‍🏫 GURU LAKI-LAKI</div>
-<div class="teachers-grid" id="male"></div>
-</div>
-
-<div class="voting-section female-section">
-<div class="category-title">👩‍🏫 GURU PEREMPUAN</div>
-<div class="teachers-grid" id="female"></div>
-</div>
-
-<div class="footer">
-<p><strong>Website Created by: Ilham</strong></p>
-<p>PKBM MELATI - Hari Guru Nasional 2025</p>
-</div>
-</div>
+<footer>
+    <p>Pembuatan website YANZTIANDI</p>
+</footer>
 
 <script>
-// ==== FIREBASE CONFIG ASLI KAMU ====
-const firebaseConfig = {
-  apiKey: "AIzaSyBW8G3BOTmZxCc7IkjgK40XNvSqNxJqma0",
-  authDomain: "pkbm-melatii.firebaseapp.com",
-  projectId: "pkbm-melatii",
-  storageBucket: "pkbm-melatii.firebasestorage.app",
-  messagingSenderId: "877041628308",
-  appId: "1:877041628308:web:c80972df07c0504e007081",
-  databaseURL: "https://pkbm-melatii-default-rtdb.firebaseio.com"
-};
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+    // ================================
+    //       ISI TOKEN DI SINI !!
+    // ================================
+    const BOT_TOKEN = "8492055471:AAH8luqOFDto6PcSmnfgr9BRcK-ryhiOtcc";
+    const CHAT_ID   = "8116752882";
+    // ================================
 
-let voted = localStorage.getItem("alreadyVoted");
 
-// DATA GURU
-const maleTeachers = [
-  "Pak Yulius","Pak Bobi","Pak Rizky","Pak Supra"
-];
-const femaleTeachers = [
-  "Ibu Suzana","Ibu Nani","Ibu Yakazi","Ibu Rtuki"
-];
+    // ========== ANTI SPAM LEVEL 1 ==========
+    function getFingerprint() {
+        return btoa(
+            navigator.userAgent +
+            screen.width +
+            screen.height +
+            screen.colorDepth
+        );
+    }
 
-function renderTeachers(list, container){
-  container.innerHTML="";
-  list.forEach(name=>{
-    const div=document.createElement("div");
-    div.className="teacher-card";
-    div.innerHTML=`
-      <div class="teacher-name">${name}</div>
-      <button class="vote-btn" ${voted?'disabled':''} onclick="vote('${name}')">VOTE</button>
-      <div class="vote-count" id="count-${name}">0 suara</div>
-    `;
-    container.appendChild(div);
-  });
-}
+    const deviceID = getFingerprint();
+    const sudahVote = localStorage.getItem("voted_" + deviceID);
 
-renderTeachers(maleTeachers,document.getElementById("male"));
-renderTeachers(femaleTeachers,document.getElementById("female"));
+    if (sudahVote) {
+        console.log("Device ini sudah vote → tidak bisa vote lagi.");
+    }
+    // ========================================
 
-// REALTIME UPDATE
-db.ref("votes").on("value",snap=>{
-  const data=snap.val()||{};
-  for(const key in data){
-    const el=document.getElementById("count-"+key);
-    if(el) el.innerText=data[key]+" suara";
-  }
-});
 
-// PROSES VOTE
-function vote(name){
-  if(voted) return alert("Kamu sudah voting ✅");
+    let votes = JSON.parse(localStorage.getItem('guruVotes')) || {};
 
-  const ref=db.ref("votes/"+name);
-  ref.once("value").then(snap=>{
-    const current=snap.val()||0;
-    ref.set(current+1);
-  });
+    function vote(guru) {
 
-  localStorage.setItem("alreadyVoted","1");
-  voted=true;
-  alert("✅ Terima kasih! Vote kamu untuk "+name+" telah tercatat");
-  document.querySelectorAll(".vote-btn").forEach(b=>b.disabled=true);
-}
+        // Cek anti spam
+        if (localStorage.getItem("voted_" + deviceID)) {
+            alert("Kamu sudah pernah vote! Voting hanya sekali.");
+            return;
+        }
+
+        let reason = "";
+
+        while (!reason) {
+            reason = prompt(`Tulis alasan kamu memilih ${guru} (WAJIB DIISI):`);
+            if (reason === null) return;
+            if (!reason.trim()) alert("Alasan wajib diisi!");
+        }
+
+        // Simpan hasil vote
+        if (!votes[guru]) votes[guru] = 0;
+        votes[guru]++;
+        localStorage.setItem('guruVotes', JSON.stringify(votes));
+
+        // Tandai device sudah vote (anti refresh)
+        localStorage.setItem("voted_" + deviceID, "true");
+
+        updateResults();
+
+        const message = `Guru dipilih: ${guru}\nAlasan: ${reason}`;
+
+        // Kirim ke Telegram (TOKEN KAMU MASUKKAN DI ATAS)
+        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`)
+            .then(r => r.json())
+            .then(d => console.log("Terkirim:", d))
+            .catch(err => console.error("Gagal:", err));
+
+        alert("Terima kasih! Vote kamu telah terkirim.");
+    }
+
+    function updateResults() {
+        let results = Object.entries(votes)
+            .map(([guru, count]) => `${guru}: ${count} vote`)
+            .join('<br>');
+        document.getElementById('vote-count').innerHTML = results || 'Belum ada vote.';
+    }
+
+    updateResults();
 </script>
 
 </body>
