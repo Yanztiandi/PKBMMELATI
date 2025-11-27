@@ -4,125 +4,123 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hari Guru Nasional - PKBM MELATI</title>
-
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #4CAF50, #2196F3);
-        margin: 0; padding: 0;
-        color: #fff;
-        text-align: center;
-    }
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #4CAF50, #2196F3);
+    margin: 0; padding: 0;
+    color: #fff;
+    text-align: center;
+}
 
-    header {
-        padding: 30px 10px;
-        background: #0004;
-        border-bottom: 2px solid #ffffff44;
-    }
+header {
+    padding: 30px 10px;
+    background: #0004;
+    border-bottom: 2px solid #ffffff44;
+}
 
-    .logo {
-        width: 150px;
-        height: 150px;
-        border-radius: 20px;
-        object-fit: cover;
-        margin-bottom: 10px;
-        box-shadow: 0 0 15px #0006;
-    }
+.logo {
+    width: 150px;
+    height: 150px;
+    border-radius: 20px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    box-shadow: 0 0 15px #0006;
+}
 
-    .school {
-        font-size: 22px;
-        margin-top: 5px;
-        font-weight: bold;
-    }
+.school {
+    font-size: 22px;
+    margin-top: 5px;
+    font-weight: bold;
+}
 
-    .title {
-        font-size: 26px;
-        margin-top: 5px;
-        font-weight: bold;
-    }
+.title {
+    font-size: 26px;
+    margin-top: 5px;
+    font-weight: bold;
+}
 
-    .thanks {
-        font-size: 16px;
-        margin-top: 8px;
-        font-weight: 500;
-        opacity: 0.9;
-    }
+.thanks {
+    font-size: 16px;
+    margin-top: 8px;
+    font-weight: 500;
+    opacity: 0.9;
+}
 
-    .container {
-        margin: 15px auto;
-        padding: 20px;
-        max-width: 900px;
-        background: #fff;
-        color: #000;
-        border-radius: 15px;
-        box-shadow: 0 5px 15px #0004;
-    }
+.container {
+    margin: 15px auto;
+    padding: 20px;
+    max-width: 900px;
+    background: #fff;
+    color: #000;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px #0004;
+}
 
-    .guru-list {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-        margin-top: 20px;
-    }
+.guru-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
 
-    @media(max-width:700px){
-        .guru-list { grid-template-columns: 1fr; }
-    }
+@media(max-width:700px){
+    .guru-list { grid-template-columns: 1fr; }
+}
 
-    .guru-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background: #f1f1f1;
-        border-radius: 15px;
-        padding: 15px;
-        box-shadow: 0 4px 10px #0003;
-        transition: transform 0.3s, box-shadow 0.3s;
-    }
+.guru-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f1f1f1;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 4px 10px #0003;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
 
-    .guru-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 20px #0003;
-    }
+.guru-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px #0003;
+}
 
-    .guru-card img {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid #2196F3;
-        margin-bottom: 10px;
-    }
+.guru-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #2196F3;
+    margin-bottom: 10px;
+}
 
-    h3 { font-size: 18px; margin: 5px 0; }
+h3 { font-size: 18px; margin: 5px 0; }
 
-    button {
-        padding: 8px 18px;
-        border: none;
-        border-radius: 25px;
-        background: #2196F3;
-        color: #fff;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.2s;
-    }
+button {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 25px;
+    background: #2196F3;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
 
-    button:hover {
-        background: #1976d2;
-        transform: scale(1.05);
-    }
+button:hover {
+    background: #1976d2;
+    transform: scale(1.05);
+}
 
-    #adminBtn {
-        margin-top: 15px;
-        background: #d32f2f;
-    }
+#adminBtn {
+    margin-top: 15px;
+    background: #d32f2f;
+}
 
-    #results {
-        margin-top: 20px;
-        font-size: 16px;
-        color: #333;
-    }
-
+#results {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
+}
 </style>
 </head>
 <body>
@@ -135,47 +133,38 @@
 </header>
 
 <div class="container">
-
     <h2>Pilih Guru Terbaik</h2>
-
     <div class="guru-list">
-
         <div class="guru-card">
             <img src="https://files.catbox.moe/xzodgz.jpg">
             <h3>Bobi Hartanto, S.Pd</h3>
             <button onclick="vote('Bobi Hartanto, S.Pd')">Vote</button>
         </div>
-
         <div class="guru-card">
             <img src="https://files.catbox.moe/n32lar.jpg">
             <h3>Suprayetno, S.Pd</h3>
             <button onclick="vote('Suprayetno, S.Pd')">Vote</button>
         </div>
-
         <div class="guru-card">
             <img src="https://files.catbox.moe/s6kg42.jpg">
             <h3>Dra. Suzana</h3>
             <button onclick="vote('Dra. Suzana')">Vote</button>
         </div>
-
         <div class="guru-card">
             <img src="https://files.catbox.moe/c2vey4.jpg">
             <h3>Dra. Maznah</h3>
             <button onclick="vote('Dra. Maznah')">Vote</button>
         </div>
-
         <div class="guru-card">
             <img src="https://files.catbox.moe/0h9moi.jpg">
             <h3>Dra. Fajarida, LD</h3>
             <button onclick="vote('Dra. Fajarida, LD')">Vote</button>
         </div>
-
         <div class="guru-card">
             <img src="https://files.catbox.moe/qn41a5.jpg">
             <h3>Innani Sumartini, S.Pd</h3>
             <button onclick="vote('Innani Sumartini, S.Pd')">Vote</button>
         </div>
-
     </div>
 
     <h3>Hasil Voting Sementara:</h3>
@@ -185,125 +174,117 @@
 </div>
 
 <script>
-    const BOT_TOKEN = "8172391826:AAGuoUSML_CpQwBR5fcEKt79T8s1bEUSwOo";
-    const CHAT_ID  = "8116752882";
+const BOT_TOKEN = "8172391826:AAGuoUSML_CpQwBR5fcEKt79T8s1bEUSwOo";
+const CHAT_ID  = "8116752882";
 
-    let VERSION = parseInt(localStorage.getItem("VERSION")) || 1;
+// Versioning untuk reset global tanpa server
+let VERSION = parseInt(localStorage.getItem("APP_VERSION")) || 1;
 
-    function getFingerprint() {
-        return btoa(navigator.userAgent + screen.width + screen.height + screen.colorDepth);
-    }
-    const deviceID = getFingerprint();
+// Fingerprint device
+function getFingerprint(){
+    return btoa(navigator.userAgent + screen.width + screen.height + screen.colorDepth);
+}
+const deviceID = getFingerprint();
 
-    const savedVersion = localStorage.getItem("APP_VERSION");
-    if (savedVersion != VERSION) {
-        localStorage.clear();
-        localStorage.setItem("APP_VERSION", VERSION);
-    }
+// Jika versi baru → anggap semua device belum vote
+if(localStorage.getItem("APP_VERSION") != VERSION){
+    localStorage.setItem("APP_VERSION", VERSION);
+    localStorage.removeItem("voted_" + deviceID);
+}
 
-    let votes = JSON.parse(localStorage.getItem('guruVotes')) || {};
-    let reasons = JSON.parse(localStorage.getItem('guruReasons')) || {};
+// Vote & alasan
+let votes = JSON.parse(localStorage.getItem('guruVotes')) || {};
+let reasons = JSON.parse(localStorage.getItem('guruReasons')) || {};
 
-    function vote(guru) {
-        if (localStorage.getItem("voted_" + deviceID)) {
-            alert("Kamu sudah vote! 1 device hanya 1x.");
-            return;
-        }
-
-        let reason = "";
-        while (!reason.trim()) {
-            reason = prompt(`Alasan memilih ${guru}:`);
-            if (reason === null) return;
-        }
-
-        if (!votes[guru]) votes[guru] = 0;
-        if (!reasons[guru]) reasons[guru] = [];
-
-        votes[guru]++;
-        reasons[guru].push(reason);
-
-        localStorage.setItem('guruVotes', JSON.stringify(votes));
-        localStorage.setItem('guruReasons', JSON.stringify(reasons));
-        localStorage.setItem("voted_" + deviceID, "true");
-
-        updateResults();
-
-        const laporan = formatLeaderboard();
-        sendToTelegram(
-            "📥 Vote Baru Masuk!\nGuru: " + guru +
-            "\nAlasan: " + reason +
-            "\n\n" + laporan
-        );
-
-        alert("Vote terkirim!");
+function vote(guru){
+    if(localStorage.getItem("voted_" + deviceID)){
+        alert("Kamu sudah vote! 1 device hanya 1x.");
+        return;
     }
 
-    function updateResults() {
-        let html = "";
-        for (let g in votes) {
-            html += `${g}: ${votes[g]} vote<br>`;
-        }
-        document.getElementById("results").innerHTML = html || "Belum ada vote.";
+    let reason = "";
+    while(!reason.trim()){
+        reason = prompt(`Alasan memilih ${guru}:`);
+        if(reason === null) return;
     }
+
+    if(!votes[guru]) votes[guru] = 0;
+    if(!reasons[guru]) reasons[guru] = [];
+
+    votes[guru]++;
+    reasons[guru].push(reason);
+
+    localStorage.setItem('guruVotes', JSON.stringify(votes));
+    localStorage.setItem('guruReasons', JSON.stringify(reasons));
+    localStorage.setItem("voted_" + deviceID, "true");
+
     updateResults();
+    sendToTelegram(
+        "📥 Vote Baru Masuk!\nGuru: " + guru +
+        "\nAlasan: " + reason +
+        "\n\n" + formatLeaderboard()
+    );
 
-    function formatLeaderboard() {
-        let out = "📊 *Leaderboard Sementara*\n\n";
-        for (let g in votes) {
-            out += `${g} – ${votes[g]} vote\n`;
-            if (reasons[g]) {
-                reasons[g].forEach((r, i) => {
-                    out += `${i+1}. ${r}\n`;
-                });
-            }
-            out += "\n";
+    alert("Vote terkirim!");
+}
+
+function updateResults(){
+    let html = "";
+    for(let g in votes){
+        html += `${g}: ${votes[g]} vote<br>`;
+    }
+    document.getElementById("results").innerHTML = html || "Belum ada vote.";
+}
+updateResults();
+
+function formatLeaderboard(){
+    let out = "📊 Leaderboard Sementara\n\n";
+    for(let g in votes){
+        out += `${g} – ${votes[g]} vote\n`;
+        if(reasons[g]){
+            reasons[g].forEach((r,i)=>{
+                out += `${i+1}. ${r}\n`;
+            });
         }
-        return out;
+        out += "\n";
     }
+    return out;
+}
 
-    function sendToTelegram(msg) {
-        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`);
-    }
+function sendToTelegram(msg){
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`);
+}
 
-    function adminLogin() {
-        const pw = prompt("Masukkan Password Admin:");
-        if (pw === "yanztiandi") adminMenu();
-        else alert("Password salah!");
-    }
+// Admin
+function adminLogin(){
+    const pw = prompt("Masukkan Password Admin:");
+    if(pw === "yanztiandi") adminMenu();
+    else alert("Password salah!");
+}
 
-    function adminMenu() {
-        let pilih = prompt(
-            "ADMIN MENU:\n1. Reset semua voting\n2. Kirim leaderboard ke Telegram\n\nPilih angka:"
-        );
+function adminMenu(){
+    let pilih = prompt(
+        "ADMIN MENU:\n1. Reset semua voting (tanpa server)\n2. Kirim leaderboard ke Telegram\n\nPilih angka:"
+    );
+    if(pilih == "1") resetGlobal();
+    else if(pilih == "2") kirimLeaderboard();
+    else alert("Menu tidak valid.");
+}
 
-        if (pilih == "1") resetGlobal();
-        else if (pilih == "2") kirimLeaderboard();
-        else alert("Menu tidak valid.");
-    }
+function resetGlobal(){
+    VERSION++;
+    localStorage.setItem("APP_VERSION", VERSION);
+    localStorage.removeItem("guruVotes");
+    localStorage.removeItem("guruReasons");
 
-    function resetGlobal() {
-        VERSION++;
-        localStorage.setItem("VERSION", VERSION);
-        localStorage.setItem("APP_VERSION", VERSION);
-        localStorage.removeItem("guruVotes");
-        localStorage.removeItem("guruReasons");
+    alert("RESET BERHASIL! Semua device yang membuka halaman versi baru bisa vote ulang!");
+    location.reload();
+}
 
-        // Hapus semua voted per device
-        for (let key in localStorage) {
-            if (key.startsWith("voted_")) {
-                localStorage.removeItem(key);
-            }
-        }
-
-        alert("RESET BERHASIL. Semua user bisa vote ulang!");
-        location.reload();
-    }
-
-    function kirimLeaderboard() {
-        sendToTelegram(formatLeaderboard());
-        alert("Leaderboard dikirim ke Telegram!");
-    }
-
+function kirimLeaderboard(){
+    sendToTelegram(formatLeaderboard());
+    alert("Leaderboard dikirim ke Telegram!");
+}
 </script>
 
 </body>
